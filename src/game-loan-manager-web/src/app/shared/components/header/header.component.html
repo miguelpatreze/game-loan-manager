@@ -1,16 +1,19 @@
 <mat-toolbar color="primary">
-    <span>Gerenciador de Empréstimo de Jogos</span>
-    <span class="spacer"></span>
-  
-    <button mat-raised-button color="accent" (click)="login()" *ngIf="!isLogged()">
-      Login
-    </button>
-    <div *ngIf="isLogged()">
-      <button mat-button [matMenuTriggerFor]="menu">{{userName}}</button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="logout()">
-          Sair
-        </button>
-      </mat-menu>
-    </div>
-  </mat-toolbar>
+  <span>Gerenciador de Empréstimo de Jogos</span>
+  <span class="spacer"></span>
+
+  <button mat-raised-button color="accent" (click)="login()" *ngIf="!isLogged()">
+    Login
+  </button>
+  <div *ngIf="isLogged()">
+    <button mat-button [matMenuTriggerFor]="menu">{{userName}}</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item routerLink="/friends" routerLinkActive="active">
+        Gerenciar Amigos
+      </button>
+      <button mat-menu-item (click)="logout()">
+        Sair
+      </button>
+    </mat-menu>
+  </div>
+</mat-toolbar>

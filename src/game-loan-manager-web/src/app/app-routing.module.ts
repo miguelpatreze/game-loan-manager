@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AppComponent } from './app.component';
+import { FriendComponent } from './components/friend/friend.component';
 
 const routes: Routes = [
-//   {
-//     path: 'users',
-//     loadChildren: () => import('./modules/users/users.module').then(m => m.UsersModule),
-//   }
+  {
+    path: 'friends',
+    component: FriendComponent
+  }
 ];
 
 @NgModule({

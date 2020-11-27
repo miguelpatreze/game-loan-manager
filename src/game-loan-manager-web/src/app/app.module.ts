@@ -6,16 +6,27 @@ import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 import { HttpJwtInterceptor } from './interceptors/http-jwt-interceptor';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatIconModule, MatMenuModule, MatMenuTrigger, MatToolbarModule } from '@angular/material';
-import { FormsModule } from '@angular/forms';
+import { MatButtonModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatPaginatorModule, MatTableModule, MatToolbarModule } from '@angular/material';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './shared/components/header/header.component';
+import { FriendComponent } from './components/friend/friend.component';
+import { AppRoutingModule } from './app-routing.module';
+import { FriendModalComponent } from './components/friend/modal/friend-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    FriendComponent,
+    FriendModalComponent
   ],
   imports: [
+    ReactiveFormsModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatPaginatorModule,
+    AppRoutingModule,
     FormsModule,
     BrowserModule,
     HttpClientModule,
@@ -24,13 +35,17 @@ import { HeaderComponent } from './shared/components/header/header.component';
     MatButtonModule,
     MatMenuModule,
     MatIconModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatDialogModule
   ],
   providers: [
     { provide: OAuthStorage, useValue: localStorage },
     { provide: HTTP_INTERCEPTORS, useClass: HttpJwtInterceptor, multi: true }
 
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    FriendModalComponent
+  ]
 })
 export class AppModule { }

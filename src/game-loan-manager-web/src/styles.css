@@ -6,3 +6,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .spacer {
     flex: 1;
   }
+
+.container {
+  position: relative;
+  min-height: 200px;
+  margin-right: auto;
+  margin-left: auto;
+  width:70%;
+}
