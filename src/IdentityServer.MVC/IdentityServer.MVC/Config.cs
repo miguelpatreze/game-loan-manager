@@ -17,6 +17,7 @@ namespace IdentityServer.MVC
                 AllowedScopes = new List<string>{ "openid" },
                 Enabled = true,
                 RedirectUris = new List<string>{"http://localhost:4200"},
+                PostLogoutRedirectUris = new List<string>{"http://localhost:4200"},
                 AllowedCorsOrigins = new List<string>{"http://localhost:4200"},
                 RequirePkce =false,
                 RequireConsent = false
