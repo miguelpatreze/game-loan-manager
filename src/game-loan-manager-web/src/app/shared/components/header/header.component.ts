@@ -8,7 +8,13 @@ import { AuthService } from 'src/app/auth/auth-service';
     styleUrls: [],
 })
 export class HeaderComponent {
-    constructor(private oauthSrv: OAuthService, private authService: AuthService) { }
+    public userName:string = this.authService.getUserName();
+
+    constructor(private authService: AuthService) { 
+        this.authService.tokenReceived.subscribe(token => {
+          if (token) this.userName = this.authService.getUserName();
+        });
+    }
 
     login() {
         this.authService.login();
@@ -19,8 +25,5 @@ export class HeaderComponent {
 
     isLogged() {
         return this.authService.isLogged();
-    }
-    getUserName() {
-        return this.authService.getUserName();
     }
 }

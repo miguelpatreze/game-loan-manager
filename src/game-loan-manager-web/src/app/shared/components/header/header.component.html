@@ -6,7 +6,7 @@
       Login
     </button>
     <div *ngIf="isLogged()">
-      <button mat-button [matMenuTriggerFor]="menu">{{getUserName()}}</button>
+      <button mat-button [matMenuTriggerFor]="menu">{{userName}}</button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item (click)="logout()">
           Sair

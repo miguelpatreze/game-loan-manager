@@ -1,16 +1,25 @@
-import { OAuthService, JwksValidationHandler } from 'angular-oauth2-oidc';
+import { OAuthService } from 'angular-oauth2-oidc';
 import { OnInit, Injectable } from '@angular/core';
 import { AuthServiceConfig } from './auth-service-config';
+import { filter } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 
 const config: AuthServiceConfig = new AuthServiceConfig;
 
 @Injectable({ providedIn: 'root' })
 export class AuthService implements OnInit {
+    public tokenReceived = new BehaviorSubject(null);
 
     roles: any;
     claims: any;
     constructor(private oAuthService: OAuthService) {
         this.setClaims();
+        this.oAuthService.events
+        .pipe(filter(e => e.type === 'token_received'))
+        .subscribe(token => {
+            this.setClaims();   
+            this.tokenReceived.next(token);
+        });
     }
 
     ngOnInit(): void {
@@ -18,7 +27,6 @@ export class AuthService implements OnInit {
 
     configureOAuth() {
         this.oAuthService.configure(config);
-        this.oAuthService.tokenValidationHandler = new JwksValidationHandler();
         this.oAuthService.loadDiscoveryDocumentAndTryLogin();
     }
 
