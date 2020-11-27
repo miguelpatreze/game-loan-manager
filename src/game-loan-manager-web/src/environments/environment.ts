@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   identityServerUrl: "http://localhost:82",
   clientId: "client_miguel",
+  apiUrl: "https://localhost:44341"
 };
 
 /*

@@ -30,7 +30,7 @@ namespace IdentityServer.MVC.Controllers
             var context = await _interaction.GetAuthorizationContextAsync(returnUrl);
 
             if (context?.Client.ClientId != null)
-                return View(new LoginViewModel("miguelpatreze", "123456", returnUrl));
+                return View(new LoginViewModel(returnUrl));
 
             return NotFound();
         }

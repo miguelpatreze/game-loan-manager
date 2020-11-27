@@ -42,12 +42,12 @@ export class AuthService implements OnInit {
         return this.oAuthService.hasValidAccessToken();
     }
     getUserName() {
-        return this.claims['sub'] || '';
+        return this.claims['name'] || '';
     }
 
     setClaims() {
         this.claims = this.oAuthService.getIdentityClaims() || {};
-        this.roles = this.claims['roles'] || [];
+        this.roles = this.claims['role'] || [];
     }
 
 }

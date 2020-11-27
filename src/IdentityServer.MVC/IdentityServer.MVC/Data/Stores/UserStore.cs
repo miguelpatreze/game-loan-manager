@@ -17,6 +17,7 @@ namespace IdentityServer.MVC.Data.Stores
         , IUserPasswordStore<ApplicationUser>
         , IQueryableUserStore<ApplicationUser>
         , IUserLockoutStore<ApplicationUser>
+        , IUserRoleStore<ApplicationUser>
     {
         private readonly IMongoCollection<ApplicationUser> _collection;
 
@@ -190,6 +191,35 @@ namespace IdentityServer.MVC.Data.Stores
             var update = Builders<ApplicationUser>.Update.Set(x => x.LockoutEnd, lockoutEnd);
 
             await _collection.UpdateOneAsync(filter, update, null, cancellationToken);
+        }
+
+        public async Task AddToRoleAsync(ApplicationUser user, string roleName, CancellationToken cancellationToken)
+        {
+            var filter = Builders<ApplicationUser>.Filter.Eq(x => x.Id, user.Id);
+
+            var update = Builders<ApplicationUser>.Update.Set(x => x.Role, new List<string> { roleName });
+
+            await _collection.UpdateOneAsync(filter, update, null, cancellationToken);
+        }
+
+        public async Task<IList<string>> GetRolesAsync(ApplicationUser user, CancellationToken cancellationToken)
+        {
+            return user.Role;
+        }
+
+        public Task<IList<ApplicationUser>> GetUsersInRoleAsync(string roleName, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> IsInRoleAsync(ApplicationUser user, string roleName, CancellationToken cancellationToken)
+        {
+            return user?.Role?.Any(role => role == roleName) == true;
+        }
+
+        public Task RemoveFromRoleAsync(ApplicationUser user, string roleName, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

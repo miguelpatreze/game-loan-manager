@@ -1,4 +1,5 @@
-﻿using IdentityServer4.Models;
+﻿using IdentityModel;
+using IdentityServer4.Models;
 using System.Collections.Generic;
 
 namespace IdentityServer.MVC
@@ -14,7 +15,7 @@ namespace IdentityServer.MVC
                 ClientName = "Client Miguel",
                 RequireClientSecret = false,
                 AllowedGrantTypes = GrantTypes.Code,
-                AllowedScopes = new List<string>{ "openid" },
+                AllowedScopes = new List<string>{ "openid", "games.loan.manager.api"},
                 Enabled = true,
                 RedirectUris = new List<string>{"http://localhost:4200"},
                 PostLogoutRedirectUris = new List<string>{"http://localhost:4200"},
@@ -27,9 +28,13 @@ namespace IdentityServer.MVC
         public static IEnumerable<IdentityResource> IdentityResources => new IdentityResource[]
         {
             new IdentityResources.OpenId(),
-            new IdentityResources.Profile(),
+            new IdentityResources.Profile()
         };
-        public static IEnumerable<ApiScope> ApiScopes => new ApiScope[] { };
+        public static IEnumerable<ApiScope> ApiScopes => new ApiScope[] {
+        new ApiScope(){
+            Name = "games.loan.manager.api",
+            UserClaims = { JwtClaimTypes.Name, JwtClaimTypes.Role }
+        } };
         public static IEnumerable<ApiResource> ApiResources => new ApiResource[] { };
     }
 }

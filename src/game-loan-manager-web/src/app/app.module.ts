@@ -6,7 +6,7 @@ import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 import { HttpJwtInterceptor } from './interceptors/http-jwt-interceptor';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatPaginatorModule, MatTableModule, MatToolbarModule } from '@angular/material';
+import { MatButtonModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatPaginatorModule, MatSortModule, MatTableModule, MatToolbarModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FriendComponent } from './components/friend/friend.component';
@@ -26,6 +26,7 @@ import { FriendModalComponent } from './components/friend/modal/friend-modal.com
     MatFormFieldModule,
     MatInputModule,
     MatPaginatorModule,
+    MatSortModule,
     AppRoutingModule,
     FormsModule,
     BrowserModule,

@@ -35,7 +35,8 @@ export class FriendModalComponent  implements OnInit {
   
   ngOnInit() {
     this.form = this.formBuilder.group({
-      'name': [null, Validators.required]
+      'name': [null, Validators.required],
+      'celphone': [null, Validators.required]
     });
   }
 

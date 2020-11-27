@@ -2,26 +2,43 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Threading.Tasks;
 
 namespace IdentityServer.MVC.Data
 {
     public class SeedData
     {
-        public static void EnsureSeedData(IServiceCollection services)
+        public static async Task EnsureSeedData(IServiceCollection services)
         {
             try
             {
                 var userMgr = services.BuildServiceProvider().GetRequiredService<UserManager<ApplicationUser>>();
-                var defaultUser = userMgr.FindByNameAsync("miguelpatreze").Result;
-                if (defaultUser == null)
+                var adminUser = await userMgr.FindByNameAsync("miguelpatreze");
+                
+                if (adminUser == null)
                 {
-                    defaultUser = new ApplicationUser
+                    adminUser = new ApplicationUser
                     {
                         UserName = "miguelpatreze",
                         Email = "patreze_2@hotmail.com",
                         EmailConfirmed = true
                     };
-                    var result = userMgr.CreateAsync(defaultUser, "123456").Result;
+                    await userMgr.CreateAsync(adminUser, "123456");
+                    await userMgr.AddToRoleAsync(adminUser, "Admin");
+                    await userMgr.AddToRoleAsync(adminUser, "Admin");
+                }
+
+                var regularUser = await userMgr.FindByNameAsync("miguelpadoze");
+           
+                if (regularUser == null)
+                {
+                    regularUser = new ApplicationUser
+                    {
+                        UserName = "miguelpadoze",
+                        Email = "padoze_2@hotmail.com",
+                        EmailConfirmed = true
+                    };
+                    await userMgr.CreateAsync(regularUser, "123456");
                 }
             }
             catch (Exception)
