@@ -10,16 +10,16 @@ const config: AuthServiceConfig = new AuthServiceConfig;
 export class AuthService implements OnInit {
     public tokenReceived = new BehaviorSubject(null);
 
-    roles: any;
+    role: any;
     claims: any;
     constructor(private oAuthService: OAuthService) {
         this.setClaims();
         this.oAuthService.events
-        .pipe(filter(e => e.type === 'token_received'))
-        .subscribe(token => {
-            this.setClaims();   
-            this.tokenReceived.next(token);
-        });
+            .pipe(filter(e => e.type === 'token_received'))
+            .subscribe(token => {
+                this.setClaims();
+                this.tokenReceived.next(token);
+            });
     }
 
     ngOnInit(): void {
@@ -47,7 +47,12 @@ export class AuthService implements OnInit {
 
     setClaims() {
         this.claims = this.oAuthService.getIdentityClaims() || {};
-        this.roles = this.claims['role'] || [];
+        console.log(this.claims);
+        this.role = this.claims['role'] || [];
+    }
+
+    userHasRole(role): boolean {
+        return this.role == role;
     }
 
 }

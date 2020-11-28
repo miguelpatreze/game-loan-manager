@@ -15,20 +15,24 @@ namespace IdentityServer.MVC
                 ClientName = "Client Miguel",
                 RequireClientSecret = false,
                 AllowedGrantTypes = GrantTypes.Code,
-                AllowedScopes = new List<string>{ "openid", "games.loan.manager.api"},
+                AllowedScopes = new List<string>{ "openid", "games.loan.manager.web"},
                 Enabled = true,
                 RedirectUris = new List<string>{"http://localhost:4200"},
                 PostLogoutRedirectUris = new List<string>{"http://localhost:4200"},
                 AllowedCorsOrigins = new List<string>{"http://localhost:4200"},
                 RequirePkce =false,
-                RequireConsent = false
+                RequireConsent = false,
+                AlwaysIncludeUserClaimsInIdToken = true
             }
         };
 
         public static IEnumerable<IdentityResource> IdentityResources => new IdentityResource[]
         {
             new IdentityResources.OpenId(),
-            new IdentityResources.Profile()
+            new IdentityResources.Profile(),
+            new IdentityResource(
+                name: "games.loan.manager.web",
+                userClaims: new List<string>{JwtClaimTypes.Name, JwtClaimTypes.Role } )
         };
         public static IEnumerable<ApiScope> ApiScopes => new ApiScope[] {
         new ApiScope(){
