@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 using System;
 
 namespace GameLoanManager.Api
@@ -36,6 +37,13 @@ namespace GameLoanManager.Api
                     .AllowAnyHeader()
                     .AllowAnyMethod().Build();
             }));
+
+            Log.Logger = new LoggerConfiguration()
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .MinimumLevel.Information()
+                .CreateLogger();
+
             services.AddScoped<INotificationContext, NotificationContext>();
 
             var assemblyPath = GetType().Assembly.Location;
@@ -45,8 +53,6 @@ namespace GameLoanManager.Api
             services.AddSwagger(Configuration, assemblyPath);
             services.AddMediatR(assembly);
             services.AddAutoMapper(assembly);
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
