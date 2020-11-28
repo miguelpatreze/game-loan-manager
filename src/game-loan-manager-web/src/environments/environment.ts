@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  identityServerUrl: "https://localhost:5001",
+  identityServerUrl: "http://localhost:82",
   clientId: "client_miguel",
-  apiUrl: "https://localhost:44341"
+  apiUrl: "http://localhost:83"
 };
 
 /*

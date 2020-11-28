@@ -47,7 +47,6 @@ export class AuthService implements OnInit {
 
     setClaims() {
         this.claims = this.oAuthService.getIdentityClaims() || {};
-        console.log(this.claims);
         this.role = this.claims['role'] || [];
     }
 

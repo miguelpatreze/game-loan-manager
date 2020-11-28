@@ -25,7 +25,6 @@ namespace IdentityServer.MVC.Data
                     };
                     await userMgr.CreateAsync(adminUser, "123456");
                     await userMgr.AddToRoleAsync(adminUser, "Admin");
-                    await userMgr.AddToRoleAsync(adminUser, "Admin");
                 }
 
                 var regularUser = await userMgr.FindByNameAsync("miguelpadoze");

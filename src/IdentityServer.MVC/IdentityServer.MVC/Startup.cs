@@ -94,7 +94,7 @@ namespace IdentityServer.MVC
             app.UseStaticFiles();
 
             app.UseRouting();
-            app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax});
+            app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax });
             app.UseIdentityServer();
 
             app.UseAuthorization();
