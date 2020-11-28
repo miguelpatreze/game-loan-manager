@@ -14,7 +14,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
   templateUrl: './friend-modal.component.html',
   styleUrls: ['./friend-modal.component.scss'],
 })
-export class FriendModalComponent  implements OnInit {
+export class FriendModalComponent implements OnInit {
   @Input() title: String;
   @Input() saveText: String = 'Salvar';
   @Input() cancelText: String = 'Cancelar';
@@ -32,12 +32,25 @@ export class FriendModalComponent  implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder
   ) { }
-  
+
   ngOnInit() {
-    this.form = this.formBuilder.group({
-      'name': [null, Validators.required],
-      'celphone': [null, Validators.required]
-    });
+    if (!this.form) {
+      this.form = this.formBuilder.group({
+        'id': [null],
+        'name': [null, Validators.required],
+        'cellPhoneNumber': [null, Validators.required]
+      });
+    }
+  }
+
+  buildForm(friend) {
+    if (friend) {
+      this.form = this.formBuilder.group({
+        'id': [friend.id],
+        'name': [friend.name, Validators.required],
+        'cellPhoneNumber': [friend.cellPhoneNumber, Validators.required]
+      });
+    }
   }
 
   close() {
@@ -45,7 +58,8 @@ export class FriendModalComponent  implements OnInit {
   }
 
   onSaveClick() {
-    this.saveClick.emit();
+    console.log(this.form.value);
+    this.saveClick.emit(this.form.value);
   }
 
   onCancelClick() {

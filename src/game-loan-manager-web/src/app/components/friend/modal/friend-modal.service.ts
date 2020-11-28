@@ -15,4 +15,8 @@ export class FriendModalService {
             id: 'friendModal'
         })
     }
+
+    close() {
+      this.matDialog.getDialogById('friendModal').close()
+    }
 }

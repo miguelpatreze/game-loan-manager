@@ -1,6 +1,8 @@
 ﻿using GameLoanManager.Api.Responses;
 using GameLoanManager.CrossCutting.Notification;
 using GameLoanManager.Domain.Commands.Friends;
+using GameLoanManager.Domain.Commands.Friends.CreateFriendCommand;
+using GameLoanManager.Domain.Commands.Friends.PatchFriendCommand;
 using GameLoanManager.Domain.Queries.Friends.GetFriendById;
 using GameLoanManager.Domain.Queries.Friends.GetFriends;
 using MediatR;
@@ -36,6 +38,12 @@ namespace GameLoanManager.Api.Controllers
         public async Task<ActionResult<Response>> Post([FromBody] CreateFriendCommand command)
         {
             return await CreateResponse(command, HttpStatusCode.Created);
+        }
+
+        [HttpPatch("{id}")]
+        public async Task<ActionResult<Response>> Patch([FromBody] PatchFriendCommand command)
+        {
+            return await CreateResponse(command, HttpStatusCode.OK);
         }
     }
 }

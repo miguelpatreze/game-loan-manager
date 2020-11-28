@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace GameLoanManager.Domain.Commands.Friends
+namespace GameLoanManager.Domain.Commands.Friends.CreateFriendCommand
 {
     public class CreateFriendCommandValidator : AbstractValidator<CreateFriendCommand>
     {

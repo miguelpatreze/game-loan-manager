@@ -1,19 +1,21 @@
 ﻿using GameLoanManager.CrossCutting;
 using MediatR;
 
-namespace GameLoanManager.Domain.Commands.Friends
+namespace GameLoanManager.Domain.Commands.Friends.PatchFriendCommand
 {
-    public class CreateFriendCommand : IRequest<Unit>
+    public class PatchFriendCommand : IRequest
     {
-        public CreateFriendCommand()
+        private PatchFriendCommand()
         {
 
         }
-        public CreateFriendCommand(string name, string cellPhoneNumber)
+        public PatchFriendCommand(string id, string name, string cellPhoneNumber)
         {
+            Id = id;
             Name = name;
             CellPhoneNumber = cellPhoneNumber.FormatCellPhoneNumber();
         }
+        public string Id { get; set; }
         public string Name { get; set; }
         public string CellPhoneNumber { get; set; }
     }

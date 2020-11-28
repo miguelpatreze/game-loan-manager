@@ -16,5 +16,9 @@ namespace GameLoanManager.Domain.Entities
         public string Name { get; private set; }
         public string NormalizedName { get; private set; }
         public string CellPhoneNumber { get; private set; }
+
+
+        public void SetName(string name) => Name = name;
+        public void SetCellPhoneNumber(string cellPhoneNumber) => CellPhoneNumber = cellPhoneNumber;
     }
 }

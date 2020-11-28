@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace GameLoanManager.Domain.Commands.Friends
+namespace GameLoanManager.Domain.Commands.Friends.CreateFriendCommand
 {
     public class CreateFriendCommandHandler :
         IRequestHandler<CreateFriendCommand>

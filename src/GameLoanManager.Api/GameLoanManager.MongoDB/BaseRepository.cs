@@ -36,5 +36,11 @@ namespace GameLoanManager.MongoDB
         {
             await _collection.InsertOneAsync(entity);
         }
+        public async Task ReplaceOneAsync(T entity, CancellationToken cancellationToken = default)
+        {
+            var filter = Builders<T>.Filter.Eq(e => e.Id, entity.Id);
+
+            await _collection.ReplaceOneAsync(filter, entity);
+        }
     }
 }
