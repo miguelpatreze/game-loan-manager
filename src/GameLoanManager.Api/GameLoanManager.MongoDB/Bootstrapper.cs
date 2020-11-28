@@ -9,7 +9,7 @@ namespace GameLoanManager.MongoDB
     {
         public static IServiceCollection UseMongoDb(this IServiceCollection services, IConfiguration configuration)
         {
-            var mongoDbSettings = configuration.GetSection(nameof(MongoDbSettings)).Get<MongoDbSettings>();
+            var mongoDbSettings = configuration.GetSection(nameof(MongoSettings)).Get<MongoSettings>();
 
             services.AddSingleton<IMongoClient>(new MongoClient(mongoDbSettings.ConnectionString));
             services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));

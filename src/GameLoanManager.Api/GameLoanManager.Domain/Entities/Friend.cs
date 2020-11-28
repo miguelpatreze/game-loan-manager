@@ -6,14 +6,22 @@ namespace GameLoanManager.Domain.Entities
     {
         public Friend(string name, string cellPhoneNumber)
         {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Name is Required to create a new Friend.");
-
             Name = name;
             NormalizedName = name?.ToLowerInvariant();
             CellPhoneNumber = cellPhoneNumber;
         }
-        public string Name { get; private set; }
+        private string _name;
+        public string Name
+        {
+            get => _name;
+            private set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ArgumentException("Name is Required to create a new Friend.");
+
+                _name = value;
+            }
+        }
         public string NormalizedName { get; private set; }
         public string CellPhoneNumber { get; private set; }
 

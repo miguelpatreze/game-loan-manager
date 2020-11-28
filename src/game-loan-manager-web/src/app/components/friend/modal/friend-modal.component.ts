@@ -58,7 +58,6 @@ export class FriendModalComponent implements OnInit {
   }
 
   onSaveClick() {
-    console.log(this.form.value);
     this.saveClick.emit(this.form.value);
   }
 

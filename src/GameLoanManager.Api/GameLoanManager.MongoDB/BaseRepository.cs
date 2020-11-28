@@ -10,7 +10,7 @@ namespace GameLoanManager.MongoDB
     public class BaseRepository<T> : IBaseRepository<T> where T : EntityBase
     {
         public readonly IMongoCollection<T> _collection;
-        public BaseRepository(IMongoClient client, MongoDbSettings settings)
+        public BaseRepository(IMongoClient client, MongoSettings settings)
         {
             _collection = client
                 .GetDatabase(settings.Database)

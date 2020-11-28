@@ -89,7 +89,6 @@ namespace GameLoanManager.Api
                 app.UseDeveloperExceptionPage();
             }
 
-
             app.UseCors("CorsPolicy");
 
             app.UseHttpsRedirection();
