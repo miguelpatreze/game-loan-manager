@@ -2,6 +2,8 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { FriendService } from 'src/app/services/friend-service';
+import { ConfirmDialogService } from 'src/app/shared/components/dialogs/confirm-dialog/confirm-dialog/confirm-dialog.service';
+import { InformationDialogService } from 'src/app/shared/components/dialogs/information-dialog/information-dialog/information-dialog.service';
 import { FriendModalService } from './modal/friend-modal.service';
 
 @Component({
@@ -19,7 +21,9 @@ export class FriendComponent implements AfterViewInit {
 
   constructor(
     private _friendService: FriendService,
-    private friendModalService: FriendModalService) {
+    private _friendModalService: FriendModalService,
+    private _confirmDialogService: ConfirmDialogService,
+    private _informationDialogService: InformationDialogService) {
 
     this._get();
   }
@@ -54,10 +58,26 @@ export class FriendComponent implements AfterViewInit {
     });
   }
 
+  remove(id) {
+    this._confirmDialogService
+      .open({ messageType: "info", message: "Deseja realmente Deletar seu amigo? 😥" })
+      .afterClosed()
+      .subscribe((ok) => {
+        if (ok)
+          this._friendService.delete(id).subscribe(res => {
+            if (res) {
+              this._get();
+            }
+          });
+      });
+  }
+
   private _get() {
     this._friendService.get()
       .subscribe((res) => {
         this.dataSource.data = res;
+      }, err => {
+        this.dataSource.data = [];
       });
   }
 
@@ -68,35 +88,24 @@ export class FriendComponent implements AfterViewInit {
   private _postFriend(form) {
     this._friendService.post(form).subscribe(res => {
       if (res) {
-        this.friendModalService.close();
+        this._informationDialogService.open({ message: "Amigo cadastrado com sucesso." });
+        this._friendModalService.close();
         this._get();
-        // this.messageDialog.open({ message: "Usuário cadastrado com sucesso." })
-        //   .afterClosed().subscribe(() => {
-        //     this.router.navigate(['/user']);
-        //   });
       }
-    }, err => {
-      // this.messageDialog.open({ message: err.map((v, i, array) => v.errorMessage).join('\n') });
     });
   }
 
   private _patchFriend(form) {
     this._friendService.patch(form).subscribe(res => {
       if (res) {
-        this.friendModalService.close();
+        this._friendModalService.close();
         this._get();
-        // this.messageDialog.open({ message: "Usuário cadastrado com sucesso." })
-        //   .afterClosed().subscribe(() => {
-        //     this.router.navigate(['/user']);
-        //   });
       }
-    }, err => {
-      // this.messageDialog.open({ message: err.map((v, i, array) => v.errorMessage).join('\n') });
     });
   }
 
   private _openModal(title, friend?) {
-    let modalRef = this.friendModalService.open({ title: title });
+    let modalRef = this._friendModalService.open({ title: title });
     modalRef.componentInstance.saveClick.subscribe((data: any) => {
       this.save(data);
     });

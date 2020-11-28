@@ -10,5 +10,6 @@ namespace GameLoanManager.Domain.Contracts
         Task<T> GetByIdAsync(string id, CancellationToken cancellationToken = default);
         Task InsertOneAsync(T entity, CancellationToken cancellationToken = default);
         Task ReplaceOneAsync(T entity, CancellationToken cancellationToken = default);
+        Task DeleteOneAsync(T entity, CancellationToken cancellationToken = default);
     }
 }

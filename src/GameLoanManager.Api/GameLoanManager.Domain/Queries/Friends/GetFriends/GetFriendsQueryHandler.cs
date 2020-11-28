@@ -33,7 +33,7 @@ namespace GameLoanManager.Domain.Queries.Friends.GetFriends
 
             if (!friends.Any())
             {
-                _notificationContext.AddNotification("No Friends Found", "There are no Friends in the database :(");
+                _notificationContext.AddNotification("Nenhum Amigo Encontrado", "Não existe nenhum amigo no Banco de Dados :(");
                 return default;
             }
 

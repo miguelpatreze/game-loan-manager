@@ -26,11 +26,9 @@ export class FriendService {
         return this.http.get<any>(`${apiUrl}/${id}`);
     }
 
-    //   delete(id): Observable<any> {
-    //     const url = `${apiUrl}/${id}`;
-
-    //     return this.http.delete<any>(url, httpOptions);
-    //   }
+    delete(id): Observable<any> {
+        return this.http.delete<any>(`${apiUrl}/${id}`, httpOptions);
+    }
 
     get(name?, enabled?): Observable<any> {
         var params = new HttpParams();

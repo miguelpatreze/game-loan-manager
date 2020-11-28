@@ -3,7 +3,7 @@ using MediatR;
 
 namespace GameLoanManager.Domain.Commands.Friends.CreateFriendCommand
 {
-    public class CreateFriendCommand : IRequest<Unit>
+    public class CreateFriendCommand : IRequest<string>
     {
         private CreateFriendCommand()
         {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace GameLoanManager.Domain.Commands.Friends.CreateFriendCommand
 {
     public class CreateFriendCommandHandler :
-        IRequestHandler<CreateFriendCommand>
+        IRequestHandler<CreateFriendCommand, string>
     {
         private readonly IMapper _mapper;
         private readonly IBaseRepository<Friend> _repository;
@@ -24,7 +24,7 @@ namespace GameLoanManager.Domain.Commands.Friends.CreateFriendCommand
             _logger = logger;
         }
 
-        public async Task<Unit> Handle(CreateFriendCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(CreateFriendCommand request, CancellationToken cancellationToken)
         {
             _logger.LogInformation($"CreateFriendCommandHandler was called Request.Name: {request.Name}");
 
@@ -34,7 +34,7 @@ namespace GameLoanManager.Domain.Commands.Friends.CreateFriendCommand
 
             await _repository.InsertOneAsync(friend, cancellationToken);
 
-            return await Unit.Task;
+            return friend.Id;
         }
     }
 }

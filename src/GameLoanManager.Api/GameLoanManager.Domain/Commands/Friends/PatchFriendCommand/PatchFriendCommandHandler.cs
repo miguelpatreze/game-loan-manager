@@ -36,7 +36,7 @@ namespace GameLoanManager.Domain.Commands.Friends.PatchFriendCommand
 
             if (friend == null)
             {
-                _notificationContext.AddNotification("Friend not Found", $"The Friend with id:{request.Id} was not found.");
+                _notificationContext.AddNotification("Amigo não encontrado", $"O amigo com o id:{request.Id} não foi encontrado.");
                 return await Unit.Task;
             }
 

@@ -1,7 +1,7 @@
 ﻿using GameLoanManager.Api.Responses;
 using GameLoanManager.CrossCutting.Notification;
-using GameLoanManager.Domain.Commands.Friends;
 using GameLoanManager.Domain.Commands.Friends.CreateFriendCommand;
+using GameLoanManager.Domain.Commands.Friends.DeleteFriendCommand;
 using GameLoanManager.Domain.Commands.Friends.PatchFriendCommand;
 using GameLoanManager.Domain.Queries.Friends.GetFriendById;
 using GameLoanManager.Domain.Queries.Friends.GetFriends;
@@ -44,6 +44,11 @@ namespace GameLoanManager.Api.Controllers
         public async Task<ActionResult<Response>> Patch([FromBody] PatchFriendCommand command)
         {
             return await CreateResponse(command, HttpStatusCode.OK);
+        }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Response>> Delete(string id)
+        {
+            return await CreateResponse(new DeleteFriendCommand(id), HttpStatusCode.OK);
         }
     }
 }

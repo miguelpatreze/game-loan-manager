@@ -12,13 +12,18 @@ import { HeaderComponent } from './shared/components/header/header.component';
 import { FriendComponent } from './components/friend/friend.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FriendModalComponent } from './components/friend/modal/friend-modal.component';
+import { ConfirmDialogComponent } from './shared/components/dialogs/confirm-dialog/confirm-dialog/confirm-dialog.component';
+import { InformationDialogComponent } from './shared/components/dialogs/information-dialog/information-dialog/information-dialog.component';
+import { HttpErrorInterceptor } from './interceptors/http-error-interceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FriendComponent,
-    FriendModalComponent
+    FriendModalComponent,
+    ConfirmDialogComponent,
+    InformationDialogComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -41,12 +46,15 @@ import { FriendModalComponent } from './components/friend/modal/friend-modal.com
   ],
   providers: [
     { provide: OAuthStorage, useValue: localStorage },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpJwtInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: HttpJwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }
 
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    FriendModalComponent
+    FriendModalComponent,
+    ConfirmDialogComponent,
+    InformationDialogComponent
   ]
 })
 export class AppModule { }

@@ -2,39 +2,47 @@
 using GameLoanManager.CrossCutting.Notification;
 using GameLoanManager.Domain.Contracts;
 using GameLoanManager.Domain.Entities;
-using GameLoanManager.Domain.Queries.Friends.GetFriendById.Responses;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace GameLoanManager.Domain.Queries.Friends.GetFriendById
+namespace GameLoanManager.Domain.Commands.Friends.DeleteFriendCommand
 {
-    public class GetFriendByIdQueryHandler : IRequestHandler<GetFriendByIdQuery, GetFriendByIdResponse>
+    public class DeleteFriendCommandHandler :
+        IRequestHandler<DeleteFriendCommand>
     {
         private readonly IMapper _mapper;
         private readonly IBaseRepository<Friend> _repository;
+        private readonly ILogger<DeleteFriendCommandHandler> _logger;
         private readonly INotificationContext _notificationContext;
 
-        public GetFriendByIdQueryHandler(IMapper mapper,
+        public DeleteFriendCommandHandler(IMapper mapper,
             IBaseRepository<Friend> repository,
+            ILogger<DeleteFriendCommandHandler> logger,
             INotificationContext notificationContext)
         {
             _mapper = mapper;
             _repository = repository;
+            _logger = logger;
             _notificationContext = notificationContext;
         }
 
-        public async Task<GetFriendByIdResponse> Handle(GetFriendByIdQuery request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteFriendCommand request, CancellationToken cancellationToken)
         {
-            var friend = await _repository.GetByIdAsync(request.Id, cancellationToken);
+            _logger.LogInformation($"DeleteFriendCommandHandler was called Request.Id: {request.Id}");
+
+            var friend = await _repository.GetByIdAsync(request.Id);
 
             if (friend == null)
             {
                 _notificationContext.AddNotification("Amigo não encontrado", $"O amigo com o id:{request.Id} não foi encontrado.");
-                return default;
+                return await Unit.Task;
             }
 
-            return _mapper.Map<GetFriendByIdResponse>(friend);
+            await _repository.DeleteOneAsync(friend, cancellationToken);
+
+            return await Unit.Task;
         }
     }
 }
