@@ -15,7 +15,7 @@ namespace IdentityServer.MVC
                 ClientName = "Client Miguel",
                 RequireClientSecret = false,
                 AllowedGrantTypes = GrantTypes.Code,
-                AllowedScopes = new List<string>{ "openid", "games.loan.manager.web"},
+                AllowedScopes = new List<string>{ "openid", "games.loan.manager.web", "write"},
                 Enabled = true,
                 RedirectUris = new List<string>{"http://localhost:4200"},
                 PostLogoutRedirectUris = new List<string>{"http://localhost:4200"},
@@ -36,9 +36,15 @@ namespace IdentityServer.MVC
         };
         public static IEnumerable<ApiScope> ApiScopes => new ApiScope[] {
         new ApiScope(){
-            Name = "games.loan.manager.api",
+            Name = "write",
             UserClaims = { JwtClaimTypes.Name, JwtClaimTypes.Role }
         } };
-        public static IEnumerable<ApiResource> ApiResources => new ApiResource[] { };
+        public static IEnumerable<ApiResource> ApiResources => new ApiResource[] {
+
+        new ApiResource("games.loan.manager.api")
+        {
+            Scopes = new List<string>{ "write" }
+        }
+        };
     }
 }

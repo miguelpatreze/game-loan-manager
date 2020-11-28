@@ -4,6 +4,7 @@ using GameLoanManager.Domain.Commands.Friends;
 using GameLoanManager.Domain.Queries.Friends.GetFriendById;
 using GameLoanManager.Domain.Queries.Friends.GetFriends;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Net;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 namespace GameLoanManager.Api.Controllers
 {
     [ApiController]
+    [Authorize(Roles = "ADMIN")]
     [Route("[controller]")]
     public class FriendsController : BaseController<FriendsController>
     {

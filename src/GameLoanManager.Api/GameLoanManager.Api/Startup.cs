@@ -1,10 +1,12 @@
 using AutoMapper;
 using FluentValidation.AspNetCore;
+using GameLoanManager.Api.Settings;
 using GameLoanManager.Api.Swagger;
 using GameLoanManager.CrossCutting.Notification;
 using GameLoanManager.Domain.Commands.Friends;
 using GameLoanManager.MongoDB;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -27,6 +29,8 @@ namespace GameLoanManager.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            ConfigureAuthentication(services, Configuration);
+
             services.AddControllers()
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateFriendCommandValidator>());
 
@@ -55,6 +59,28 @@ namespace GameLoanManager.Api
             services.AddAutoMapper(assembly);
         }
 
+        private static void ConfigureAuthentication(IServiceCollection services, IConfiguration configuration)
+        {
+            var identityServerSettings = configuration.GetSection(nameof(IdentityServerSettings)).Get<IdentityServerSettings>();
+
+            services
+                .AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                }).AddJwtBearer(
+                opt =>
+                {
+                    opt.Authority = identityServerSettings.Url;
+                    opt.Audience = identityServerSettings.ApiResource;
+                    opt.RequireHttpsMetadata = false;
+                });
+
+            services.AddHttpContextAccessor();
+
+            services.AddAuthorization();
+        }
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -70,6 +96,7 @@ namespace GameLoanManager.Api
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.ConfigureSwagger(Configuration);

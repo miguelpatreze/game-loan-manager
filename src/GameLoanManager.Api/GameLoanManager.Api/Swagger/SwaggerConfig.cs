@@ -83,6 +83,15 @@ namespace GameLoanManager.Api.Swagger
 
                 c.ExampleFilters();
                 c.IncludeXmlComments(pathXmlDoc);
+
+                c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                {
+                    Description = "Standard Authorization header using the Bearer scheme. Example: \"Bearer {token}\"",
+                    In = ParameterLocation.Header,
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey
+                });
+                c.OperationFilter<SecurityRequirementsOperationFilter>();
             };
         }
 
