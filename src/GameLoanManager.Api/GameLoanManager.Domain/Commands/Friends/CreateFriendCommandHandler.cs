@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using GameLoanManager.Domain.Contracts;
 using GameLoanManager.Domain.Entities;
-using GameLoanManager.Domain.Reponses;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,7 +8,7 @@ using System.Threading.Tasks;
 namespace GameLoanManager.Domain.Commands.Friends
 {
     public class CreateFriendCommandHandler :
-        IRequestHandler<CreateFriendCommand, Response>
+        IRequestHandler<CreateFriendCommand>
     {
         private readonly IMapper _mapper;
         private readonly IBaseRepository<Friend> _repository;
@@ -21,7 +20,7 @@ namespace GameLoanManager.Domain.Commands.Friends
             _repository = repository;
         }
 
-        public async Task<Response> Handle(CreateFriendCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateFriendCommand request, CancellationToken cancellationToken)
         {
             var friend = _mapper.Map<Friend>(request);
 
@@ -29,7 +28,7 @@ namespace GameLoanManager.Domain.Commands.Friends
 
             await _repository.InsertOneAsync(friend, cancellationToken);
 
-            return new Response();
+            return await Unit.Task;
         }
     }
 }

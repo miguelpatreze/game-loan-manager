@@ -1,9 +1,9 @@
-﻿using GameLoanManager.Domain.Reponses;
+﻿using GameLoanManager.Domain.Queries.Friends.GetFriendById.Responses;
 using MediatR;
 
 namespace GameLoanManager.Domain.Queries.Friends.GetFriendById
 {
-    public class GetFriendByIdQuery : IRequest<Response>
+    public class GetFriendByIdQuery : IRequest<GetFriendByIdResponse>
     {
         public GetFriendByIdQuery(string id)
         {

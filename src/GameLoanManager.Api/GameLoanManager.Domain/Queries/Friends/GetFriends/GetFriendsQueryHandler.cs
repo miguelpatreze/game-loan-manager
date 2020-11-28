@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
+using GameLoanManager.CrossCutting.Notification;
 using GameLoanManager.Domain.Contracts;
 using GameLoanManager.Domain.Entities;
 using GameLoanManager.Domain.Queries.Friends.GetFriends.Responses;
-using GameLoanManager.Domain.Reponses;
 using MediatR;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,33 +11,33 @@ using System.Threading.Tasks;
 
 namespace GameLoanManager.Domain.Queries.Friends.GetFriends
 {
-    public class GetFriendsQueryHandler : IRequestHandler<GetFriendsQuery, Response>
+    public class GetFriendsQueryHandler : IRequestHandler<GetFriendsQuery, IEnumerable<GetFriendsResponse>>
     {
         private readonly IMapper _mapper;
         private readonly IBaseRepository<Friend> _repository;
+        private readonly INotificationContext _notificationContext;
 
         public GetFriendsQueryHandler(IMapper mapper,
-            IBaseRepository<Friend> repository)
+            IBaseRepository<Friend> repository,
+            INotificationContext notificationContext)
         {
             _mapper = mapper;
             _repository = repository;
+            _notificationContext = notificationContext;
         }
 
 
-        public async Task<Response> Handle(GetFriendsQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<GetFriendsResponse>> Handle(GetFriendsQuery request, CancellationToken cancellationToken)
         {
-            var response = new Response();
             var friends = await _repository.FindAsync(cancellationToken);
 
             if (!friends.Any())
             {
-                response.AddNotification("No Friends Found", "There are no Friends in the database :(", Notifications.NotificationType.NotFound);
-                return response;
+                _notificationContext.AddNotification("No Friends Found", "There are no Friends in the database :(");
+                return default;
             }
 
-            var payload = _mapper.Map<List<GetFriendsResponse>>(friends);
-
-            return new Response(payload, null);
+            return _mapper.Map<IEnumerable<GetFriendsResponse>>(friends);
         }
     }
 }

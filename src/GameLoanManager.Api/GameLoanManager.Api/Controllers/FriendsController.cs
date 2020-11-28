@@ -1,7 +1,8 @@
-﻿using GameLoanManager.Domain.Commands.Friends;
+﻿using GameLoanManager.Api.Responses;
+using GameLoanManager.CrossCutting.Notification;
+using GameLoanManager.Domain.Commands.Friends;
 using GameLoanManager.Domain.Queries.Friends.GetFriendById;
 using GameLoanManager.Domain.Queries.Friends.GetFriends;
-using GameLoanManager.Domain.Reponses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -14,12 +15,13 @@ namespace GameLoanManager.Api.Controllers
     [Route("[controller]")]
     public class FriendsController : BaseController<FriendsController>
     {
-        public FriendsController(ILogger<FriendsController> logger, IMediator mediator) : base(logger, mediator)
+        public FriendsController(ILogger<FriendsController> logger, IMediator mediator, INotificationContext notificationContext)
+            : base(logger, mediator, notificationContext)
         {
         }
 
         [HttpGet]
-        public async Task<ActionResult<Response>> Get()
+        public async Task<ActionResult> Get()
         {
             return await CreateResponse(new GetFriendsQuery(), HttpStatusCode.Created);
         }

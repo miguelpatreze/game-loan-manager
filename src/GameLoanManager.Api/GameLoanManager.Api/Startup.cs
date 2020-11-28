@@ -1,6 +1,7 @@
 using AutoMapper;
 using FluentValidation.AspNetCore;
 using GameLoanManager.Api.Swagger;
+using GameLoanManager.CrossCutting.Notification;
 using GameLoanManager.Domain.Commands.Friends;
 using GameLoanManager.MongoDB;
 using MediatR;
@@ -35,6 +36,7 @@ namespace GameLoanManager.Api
                     .AllowAnyHeader()
                     .AllowAnyMethod().Build();
             }));
+            services.AddScoped<INotificationContext, NotificationContext>();
 
             var assemblyPath = GetType().Assembly.Location;
             var assembly = AppDomain.CurrentDomain.Load("GameLoanManager.Domain");
@@ -43,6 +45,8 @@ namespace GameLoanManager.Api
             services.AddSwagger(Configuration, assemblyPath);
             services.AddMediatR(assembly);
             services.AddAutoMapper(assembly);
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

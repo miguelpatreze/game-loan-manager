@@ -7,8 +7,8 @@ namespace GameLoanManager.Domain.Commands.Friends
     {
         public CreateFriendCommandProfile()
         {
-            CreateMap<CreateFriendCommand, Friend>()
-                .ForMember(f => f.NormalizedName, opt => opt.MapFrom(src => src.Name.ToLowerInvariant()));
+            CreateMap<CreateFriendCommand, Friend>();
+                //.ForMember(f => f.NormalizedName, opt => opt.MapFrom(src => src.Name.ToLowerInvariant()));
         }
 
     }

@@ -14,9 +14,9 @@ namespace GameLoanManager.Domain.Entities
 
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
-        public string Id { get; set; }
-        public bool Enabled { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime? UpdatedAt { get; set; }
+        public string Id { get; private set; }
+        public bool Enabled { get; private set; }
+        public DateTime CreatedAt { get; private set; }
+        public DateTime? UpdatedAt { get; private set; }
     }
 }

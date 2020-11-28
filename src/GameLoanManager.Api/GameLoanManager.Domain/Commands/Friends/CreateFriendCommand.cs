@@ -1,10 +1,9 @@
 ﻿using GameLoanManager.CrossCutting;
-using GameLoanManager.Domain.Reponses;
 using MediatR;
 
 namespace GameLoanManager.Domain.Commands.Friends
 {
-    public class CreateFriendCommand : IRequest<Response>
+    public class CreateFriendCommand : IRequest<Unit>
     {
         public CreateFriendCommand()
         {
