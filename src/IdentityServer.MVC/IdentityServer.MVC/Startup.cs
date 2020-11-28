@@ -35,9 +35,8 @@ namespace IdentityServer.MVC
             services.AddDataProtection(opts =>
             {
                 opts.ApplicationDiscriminator = "identity.server.mvc";
-            }).PersistKeysToStackExchangeRedis(ConnectionMultiplexer.Connect(
-                redisCacheSettings.ConnectionString
-                ), "DataProtection-Keys");
+            })
+            .PersistKeysToStackExchangeRedis(ConnectionMultiplexer.Connect(redisCacheSettings.ConnectionString), "DataProtection-Keys");
 
             var mongoSettings = Configuration.GetSection(nameof(MongoSettings)).Get<MongoSettings>();
             services.AddSingleton(mongoSettings);
@@ -64,6 +63,7 @@ namespace IdentityServer.MVC
 
             services.AddIdentityServer(opt =>
             {
+                opt.IssuerUri = Configuration.GetValue<string>("Issuer_Uri");
                 opt.UserInteraction.LoginUrl = "/Account/Login";
                 opt.UserInteraction.LogoutUrl = "/Account/Logout";
             })

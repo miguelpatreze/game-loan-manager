@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Logging;
 using Serilog;
 using System;
 
@@ -88,6 +89,7 @@ namespace GameLoanManager.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+            IdentityModelEventSource.ShowPII = true;
 
             app.UseCors("CorsPolicy");
 
