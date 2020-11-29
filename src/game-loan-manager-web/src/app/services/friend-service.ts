@@ -42,5 +42,4 @@ export class FriendService {
     patch(friend): Observable<any> {
         return this.http.patch<any>(`${apiUrl}/${friend.id}`, friend, httpOptions);
     }
-
 }

@@ -8,7 +8,7 @@ namespace GameLoanManager.Api.Swagger.Examples.Games
     {
         public PatchGameCommand GetExamples()
         {
-            return new PatchGameCommand(ObjectId.GenerateNewId().ToString(), "Dark Souls 2");
+            return new PatchGameCommand("","Dark Souls 2");
         }
     }
 }

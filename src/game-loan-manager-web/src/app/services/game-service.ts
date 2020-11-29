@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 const httpOptions = {
@@ -20,7 +20,6 @@ export class GameService {
     post(game): Observable<any> {
         return this.http.post<any>(apiUrl, game, httpOptions);
     }
-
 
     getById(id): Observable<any> {
         return this.http.get<any>(`${apiUrl}/${id}`);
@@ -43,4 +42,10 @@ export class GameService {
         return this.http.patch<any>(`${apiUrl}/${game.id}`, game, httpOptions);
     }
 
+    postLoan(loan): Observable<any> {
+        return this.http.post<any>(`${apiUrl}/${loan.gameId}/loans/${loan.friendId}`, httpOptions);
+    }
+    postDevolution(devolution): Observable<any> {
+        return this.http.post<any>(`${apiUrl}/${devolution.gameId}/devolutions`, httpOptions);
+    }
 }

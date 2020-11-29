@@ -18,17 +18,10 @@ namespace GameLoanManager.Domain.Test.Mocks.Commands.PatchGame
                 "abcdefghij",
                 "Dark Souls 2");
         }
-        public static PatchGameCommand GetEmptyIdInstance()
-        {
-            return new PatchGameCommand(
-                string.Empty,
-                "Dark Souls 2"
-                );
-        }
         public static PatchGameCommand GetNameMoreThenHundredCharacteresLengthInstance()
         {
             return new PatchGameCommand(
-                string.Empty,
+                GameMock.ValidGameId,
                 "123456789012345678901234567890123456789012345678901"
                 );
         }

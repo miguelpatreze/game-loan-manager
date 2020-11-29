@@ -15,8 +15,10 @@ namespace GameLoanManager.Domain.Commands.Friends.PatchFriend
             Name = name;
             CellPhoneNumber = cellPhoneNumber.FormatCellPhoneNumber();
         }
-        public string Id { get; set; }
+        internal string Id { get; set; }
         public string Name { get; set; }
         public string CellPhoneNumber { get; set; }
+
+        public void SetId(string id) => Id = id;
     }
 }

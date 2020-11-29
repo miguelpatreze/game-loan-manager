@@ -22,13 +22,6 @@ namespace GameLoanManager.Domain.Test.Tests.Commands.PatchFriend
             validate.IsValid.Should().BeTrue();
         }
 
-        [Fact(DisplayName = "Should Not Be Valid When Command Is Populated And Id Is Empty")]
-        public void ShouldNotBeValidWhenCommandIsPopulatedAndNameIsEmpty()
-        {
-            var validate = _validator.Validate(PatchFriendCommandMock.GetEmptyIdInstance());
-            validate.IsValid.Should().BeFalse();
-        }
-
         [Fact(DisplayName = "Should Not Be Valid When Command Is Populated And CellPhoneNumber Is Ten Characteres Length")]
         public void ShouldNotBeValidWhenCommandIsPopulatedAndCellPhoneNumberIsTenCharacteresLength()
         {

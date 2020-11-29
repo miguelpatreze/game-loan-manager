@@ -30,8 +30,6 @@ namespace GameLoanManager.Domain.Commands.Games.CreateGame
 
             var game = _mapper.Map<Game>(request);
 
-            //TODO: Create validation of duplicated name
-
             await _repository.InsertOneAsync(game, cancellationToken);
 
             _logger.LogInformation("CreateGameCommandHandler end of execution");

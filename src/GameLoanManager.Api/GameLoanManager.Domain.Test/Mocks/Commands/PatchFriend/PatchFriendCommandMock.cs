@@ -20,13 +20,6 @@ namespace GameLoanManager.Domain.Test.Mocks.Commands.PatchFriend
                 "Miguel Patreze",
                 "16987654321");
         }
-        public static PatchFriendCommand GetEmptyIdInstance()
-        {
-            return new PatchFriendCommand(
-                string.Empty,
-                "Miguel Patreze",
-                "16987654321");
-        }
         public static PatchFriendCommand GetCellPhoneNumberLessThenElevenCharacteresLengthInstance()
         {
             return new PatchFriendCommand(

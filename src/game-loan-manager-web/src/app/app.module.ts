@@ -6,7 +6,7 @@ import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 import { HttpJwtInterceptor } from './interceptors/http-jwt-interceptor';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatPaginatorIntl, MatPaginatorModule, MatSortModule, MatTableModule, MatToolbarModule, MatTooltipModule } from '@angular/material';
+import { MatAutocompleteModule, MatButtonModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatPaginatorIntl, MatPaginatorModule, MatSelectModule, MatSortModule, MatTableModule, MatToolbarModule, MatTooltipModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FriendComponent } from './components/friend/friend.component';
@@ -19,6 +19,7 @@ import { GameComponent } from './components/game/game.component';
 import { GameModalComponent } from './components/game/modal/game-modal.component';
 import { IConfig, NgxMaskModule } from 'ngx-mask';
 import { getBrPaginatorIntl } from './shared/components/paginator/br-paginator.intl';
+import { GameLoanModalComponent } from './components/game/modal/game-loan-modal.component';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 @NgModule({
@@ -29,6 +30,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     GameComponent,
     FriendModalComponent,
     GameModalComponent,
+    GameLoanModalComponent,
     ConfirmDialogComponent,
     InformationDialogComponent
   ],
@@ -51,7 +53,9 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     MatIconModule,
     BrowserAnimationsModule,
     MatDialogModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatAutocompleteModule,
+    MatSelectModule
   ],
   providers: [
     { provide: OAuthStorage, useValue: localStorage },
@@ -64,6 +68,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
   entryComponents: [
     FriendModalComponent,
     GameModalComponent,
+    GameLoanModalComponent,
     ConfirmDialogComponent,
     InformationDialogComponent
   ]

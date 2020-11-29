@@ -30,8 +30,6 @@ namespace GameLoanManager.Domain.Commands.Friends.CreateFriend
 
             var friend = _mapper.Map<Friend>(request);
 
-            //TODO: Create validation of duplicated name
-
             await _repository.InsertOneAsync(friend, cancellationToken);
 
             _logger.LogInformation("CreateFriendCommandHandler end of execution.");

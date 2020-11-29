@@ -31,8 +31,22 @@ namespace GameLoanManager.Domain.Entities
             }
         }
         public string NormalizedName { get; private set; }
-
+        public bool Loaned { get; private set; }
+        public DateTime? LoanedAt { get; private set; }
+        public DateTime? ReturnedAt { get; private set; }
 
         public void SetName(string name) => Name = name;
+        public void LoanGame()
+        {
+            Loaned = true;
+            LoanedAt = DateTime.Now;
+        }
+
+        public void ReturnGame()
+        {
+            Loaned = false;
+            LoanedAt = null;
+            ReturnedAt = DateTime.Now;
+        }
     }
 }

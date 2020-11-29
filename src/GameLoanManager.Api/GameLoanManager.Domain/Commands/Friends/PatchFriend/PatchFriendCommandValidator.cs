@@ -6,10 +6,6 @@ namespace GameLoanManager.Domain.Commands.Friends.PatchFriend
     {
         public PatchFriendCommandValidator()
         {
-            RuleFor(friend => friend.Id)
-                .NotEmpty()
-                .WithMessage("Obrigatório informar o Id do Amigo a ser alterado.");
-
             RuleFor(friend => friend.Name)
                 .MaximumLength(100)
                 .WithMessage("O nome do amigo não pode ultrapassar 100 caracteres")

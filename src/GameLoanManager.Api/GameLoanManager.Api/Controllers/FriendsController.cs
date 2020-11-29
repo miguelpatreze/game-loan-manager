@@ -41,8 +41,9 @@ namespace GameLoanManager.Api.Controllers
         }
 
         [HttpPatch("{id}")]
-        public async Task<ActionResult<Response>> Patch([FromBody] PatchFriendCommand command)
+        public async Task<ActionResult<Response>> Patch(string id, [FromBody] PatchFriendCommand command)
         {
+            command.SetId(id);
             return await CreateResponse(command, HttpStatusCode.OK);
         }
         [HttpDelete("{id}")]

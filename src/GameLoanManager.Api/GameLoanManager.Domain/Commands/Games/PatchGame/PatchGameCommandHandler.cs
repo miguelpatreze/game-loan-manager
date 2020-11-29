@@ -40,8 +40,6 @@ namespace GameLoanManager.Domain.Commands.Games.PatchGame
                 return await Unit.Task;
             }
 
-            //TODO: Create validation of duplicated name
-
             if (!string.IsNullOrWhiteSpace(request.Name) && !game.Name.Equals(request.Name, System.StringComparison.OrdinalIgnoreCase))
                 game.SetName(request.Name);
 

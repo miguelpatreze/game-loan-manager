@@ -40,8 +40,6 @@ namespace GameLoanManager.Domain.Commands.Friends.PatchFriend
                 return await Unit.Task;
             }
 
-            //TODO: Create validation of duplicated name
-
             if (!string.IsNullOrWhiteSpace(request.Name) && !friend.Name.Equals(request.Name, System.StringComparison.OrdinalIgnoreCase))
                 friend.SetName(request.Name);
 

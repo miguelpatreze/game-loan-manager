@@ -4,6 +4,7 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { GameService } from 'src/app/services/game-service';
 import { ConfirmDialogService } from 'src/app/shared/components/dialogs/confirm-dialog/confirm-dialog/confirm-dialog.service';
 import { InformationDialogService } from 'src/app/shared/components/dialogs/information-dialog/information-dialog/information-dialog.service';
+import { GameLoanModalService } from './modal/game-loan-modal.service';
 import { GameModalService } from './modal/game-modal.service';
 
 @Component({
@@ -13,7 +14,7 @@ import { GameModalService } from './modal/game-modal.service';
 })
 export class GameComponent implements AfterViewInit {
 
-  displayedColumns: string[] = ['name', 'created', 'actions'];
+  displayedColumns: string[] = ['name', 'created', 'situation', 'actions'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
@@ -23,7 +24,8 @@ export class GameComponent implements AfterViewInit {
     private _gameService: GameService,
     private _gameModalService: GameModalService,
     private _confirmDialogService: ConfirmDialogService,
-    private _informationDialogService: InformationDialogService) {
+    private _informationDialogService: InformationDialogService,
+    private _gameLoanModalService: GameLoanModalService,) {
 
     this._get();
   }
@@ -73,6 +75,33 @@ export class GameComponent implements AfterViewInit {
       });
   }
 
+  loan(id) {
+    let modalRef = this._gameLoanModalService.open({ title: "Emprestar Jogo" });
+    modalRef.componentInstance.saveClick.subscribe((data: any) => {
+      this._gameService.postLoan({ gameId: id, friendId: data.friend.id })
+        .subscribe(res => {
+          if (res) {
+            this._informationDialogService.open({ message: "Jogo emprestado com sucesso." });
+            this._get();
+          }
+        })
+    });
+  }
+
+  return(id) {
+    this._confirmDialogService
+      .open({ messageType: "info", message: "Deseja realmente Receber o jogo de volta?" })
+      .afterClosed()
+      .subscribe((ok) => {
+        if (ok)
+          this._gameService.postDevolution({ gameId: id }).subscribe(res => {
+            if (res) {
+              this._informationDialogService.open({ message: "Jogo recebido com sucesso." });
+              this._get();
+            }
+          });
+      });
+  }
   private _get() {
     this._gameService.get()
       .subscribe((res) => {

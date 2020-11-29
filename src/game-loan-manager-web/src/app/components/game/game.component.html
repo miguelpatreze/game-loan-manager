@@ -23,6 +23,11 @@
                     <td mat-cell *matCellDef="let row">{{row?.name}}</td>
                 </ng-container>
 
+                <ng-container matColumnDef="situation">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Situação</th>
+                    <td mat-cell *matCellDef="let row">{{row?.loaned ? 'Emprestado' : 'Não Emprestado'}}</td>
+                </ng-container>
+
                 <ng-container matColumnDef="created">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
                         Criado em
@@ -33,7 +38,17 @@
                 <ng-container matColumnDef="actions">
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td mat-cell *matCellDef="let element">
-                        <button mat-button (click)="detail(element?.id)" matTooltip="Ver detalhes">
+                        <button *ngIf="!element.loaned" mat-button (click)="loan(element?.id)" matTooltip="Emprestar Jogo">
+                            <i class="material-icons">
+                                redo
+                            </i>
+                        </button>
+                        <button  *ngIf="element.loaned" mat-button (click)="return(element?.id)" matTooltip="Receber Jogo">
+                            <i class="material-icons">
+                                undo
+                            </i>
+                        </button>
+                        <button mat-button (click)="detail(element?.id)" matTooltip="Ver Detalhes">
                             <i class="material-icons">
                                 remove_red_eye
                             </i>

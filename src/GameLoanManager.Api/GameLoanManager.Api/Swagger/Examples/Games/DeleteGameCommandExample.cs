@@ -8,7 +8,7 @@ namespace GameLoanManager.Api.Swagger.Examples.Games
     {
         public DeleteGameCommand GetExamples()
         {
-            return new DeleteGameCommand(ObjectId.GenerateNewId().ToString().ToString());
+            return new DeleteGameCommand(ObjectId.GenerateNewId().ToString());
         }
     }
 }
