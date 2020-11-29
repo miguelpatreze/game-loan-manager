@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace GameLoanManager.Api.Controllers
 {
     [ApiController]
-    [Authorize(Roles = "ADMIN")]
+    //[Authorize(Roles = "ADMIN")]
     [Route("[controller]")]
     public class GamesController : BaseController<GamesController>
     {

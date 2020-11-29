@@ -13,12 +13,20 @@ namespace GameLoanManager.Domain.Test.Mocks.Contracts
         public static IBaseRepository<Game> GetDefaultInstance()
         {
             return Substitute.For<IBaseRepository<Game>>()
-                    .GetInsertOneAsync();
+                    .GetInsertOneAsync()
+                    .GetGetByIdAsync();
         }
         public static IBaseRepository<Game> GetInsertOneAsync(this IBaseRepository<Game> repository)
         {
             repository.InsertOneAsync(Arg.Is<Game>(GameMock.GetDefaultValidInstance()), Arg.Any<CancellationToken>())
                 .Returns(Task.CompletedTask);
+
+            return repository;
+        }
+        public static IBaseRepository<Game> GetGetByIdAsync(this IBaseRepository<Game> repository)
+        {
+            repository.GetByIdAsync(Arg.Is(GameMock.GetDefaultValidInstance().Id), Arg.Any<CancellationToken>())
+                .Returns(GameMock.GetDefaultValidInstance());
 
             return repository;
         }

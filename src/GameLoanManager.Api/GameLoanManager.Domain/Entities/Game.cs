@@ -27,6 +27,7 @@ namespace GameLoanManager.Domain.Entities
                     throw new ArgumentException("Name is Required to create a new Game.");
 
                 _name = value;
+                NormalizedName = value.ToLowerInvariant();
             }
         }
         public string NormalizedName { get; private set; }
