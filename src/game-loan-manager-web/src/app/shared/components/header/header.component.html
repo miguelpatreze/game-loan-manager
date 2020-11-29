@@ -8,13 +8,13 @@
   <div *ngIf="isLogged()">
     <button mat-button [matMenuTriggerFor]="menu">{{userName}}</button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item routerLink="/friends" routerLinkActive="active">
+      <button mat-menu-item routerLink="/friends" routerLinkActive="active" matTooltip="Gerenciar Amigos">
         Gerenciar Amigos
       </button>
-      <button mat-menu-item routerLink="/games" routerLinkActive="active">
+      <button mat-menu-item routerLink="/games" routerLinkActive="active" matTooltip="Gerenciar Jogos">
         Gerenciar Jogos
       </button>
-      <button mat-menu-item (click)="logout()">
+      <button mat-menu-item (click)="logout()" matTooltip="Sair">
         Sair
       </button>
     </mat-menu>
