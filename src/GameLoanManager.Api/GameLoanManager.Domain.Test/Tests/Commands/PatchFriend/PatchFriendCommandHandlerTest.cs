@@ -60,7 +60,7 @@ namespace GameLoanManager.Domain.Test.Tests.Commands.PatchFriend
         public async Task ShouldBeSuccessWhenCallMethodHandleAndFriendIsNull()
         {
             var repository = FriendRepositoryMock.GetDefaultInstance();
-            var command = PatchFriendCommandMock.GetDefaultInstanceWithNonExistentFriend();
+            var command = PatchFriendCommandMock.GetDefaultInstanceWithNonExistentFriendInstance();
             var handler = GetHandler(repository: repository, notificationContext: _notificationContext);
 
             await handler.Handle(command, default);

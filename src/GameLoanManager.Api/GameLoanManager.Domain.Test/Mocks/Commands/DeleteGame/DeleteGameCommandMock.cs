@@ -8,7 +8,7 @@ namespace GameLoanManager.Domain.Test.Mocks.Commands.DeleteGame
 
         public static DeleteGameCommand GetDefaultValidInstance()
         {
-            return new DeleteGameCommand(GameMock.GetDefaultValidInstance().Id);
+            return new DeleteGameCommand(GameMock.ValidGameId);
         }
         public static DeleteGameCommand GetDefaultInstanceWithNonExistentGame()
         {

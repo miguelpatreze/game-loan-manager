@@ -17,7 +17,7 @@ namespace GameLoanManager.Domain.Test.Mocks.Contracts
         }
         public static IBaseRepository<Friend> GetGetByIdAsync(this IBaseRepository<Friend> repository)
         {
-            repository.GetByIdAsync(Arg.Is(FriendMock.GetDefaultValidInstance().Id), Arg.Any<CancellationToken>())
+            repository.GetByIdAsync(Arg.Is(FriendMock.ValidFriendId), Arg.Any<CancellationToken>())
                 .Returns(FriendMock.GetDefaultValidInstance());
 
             return repository;

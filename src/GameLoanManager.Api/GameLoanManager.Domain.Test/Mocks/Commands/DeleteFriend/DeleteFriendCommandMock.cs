@@ -7,7 +7,7 @@ namespace GameLoanManager.Domain.Test.Mocks.Commands.DeleteFriend
     {
         public static DeleteFriendCommand GetDefaultValidInstance()
         {
-            return new DeleteFriendCommand(FriendMock.GetDefaultValidInstance().Id);
+            return new DeleteFriendCommand(FriendMock.ValidFriendId);
         }
         public static DeleteFriendCommand GetDefaultInstanceWithNonExistentFriend()
         {

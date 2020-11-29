@@ -8,7 +8,7 @@ namespace GameLoanManager.Domain.Test.Mocks.Commands.PatchGame
         public static PatchGameCommand GetDefaultValidInstance()
         {
             return new PatchGameCommand(
-                GameMock.GetDefaultValidInstance().Id,
+                GameMock.ValidGameId,
                 "Dark Souls 2"
                 );
         }
@@ -17,6 +17,20 @@ namespace GameLoanManager.Domain.Test.Mocks.Commands.PatchGame
             return new PatchGameCommand(
                 "abcdefghij",
                 "Dark Souls 2");
+        }
+        public static PatchGameCommand GetEmptyIdInstance()
+        {
+            return new PatchGameCommand(
+                string.Empty,
+                "Dark Souls 2"
+                );
+        }
+        public static PatchGameCommand GetNameMoreThenHundredCharacteresLengthInstance()
+        {
+            return new PatchGameCommand(
+                string.Empty,
+                "123456789012345678901234567890123456789012345678901"
+                );
         }
     }
 }

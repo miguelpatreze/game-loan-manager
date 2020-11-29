@@ -5,7 +5,7 @@ namespace GameLoanManager.Domain.Test.Mocks.Entities
 {
     public static class GameMock
     {
-        private static readonly string ValidGameId = ObjectId.GenerateNewId().ToString();
+        public static readonly string ValidGameId = "5fb281810430709bfc2f9ade";
         public static Game GetDefaultValidInstance()
         {
             return new Game(ValidGameId, "Dark Souls 3");

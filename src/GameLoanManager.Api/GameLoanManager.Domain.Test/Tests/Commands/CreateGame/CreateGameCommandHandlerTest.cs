@@ -41,7 +41,7 @@ namespace GameLoanManager.Domain.Test.Tests.Commands.CreateGame
             var result = await handler.Handle(command, default);
             
             await repository.ReceivedWithAnyArgs().InsertOneAsync(default, default);
-            Assert.Equal(result, GameMock.GetDefaultValidInstance().Id);
+            Assert.Equal(result, GameMock.ValidGameId);
         }
     }
 }

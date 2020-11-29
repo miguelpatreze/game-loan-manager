@@ -1,15 +1,14 @@
 ﻿using GameLoanManager.Domain.Entities;
-using MongoDB.Bson;
 
 namespace GameLoanManager.Domain.Test.Mocks.Entities
 {
     public class FriendMock
     {
 
-        private static readonly string ValidFriendId = ObjectId.GenerateNewId().ToString();
+        public static readonly string ValidFriendId = "5fb281810430709bfc2f9add";
         public static Friend GetDefaultValidInstance()
         {
-            return new Friend(ValidFriendId, "Dark Souls 3");
+            return new Friend(ValidFriendId, "Miguel Patreze", "16987654321");
         }
     }
 }

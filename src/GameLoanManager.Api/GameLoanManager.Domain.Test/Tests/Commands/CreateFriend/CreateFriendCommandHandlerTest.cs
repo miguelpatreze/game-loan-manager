@@ -41,7 +41,7 @@ namespace GameLoanManager.Domain.Test.Tests.Commands.CreateFriend
             var result = await handler.Handle(command, default);
 
             await repository.ReceivedWithAnyArgs().InsertOneAsync(default, default);
-            Assert.Equal(result, FriendMock.GetDefaultValidInstance().Id);
+            Assert.Equal(result, FriendMock.ValidFriendId);
         }
     }
 }
