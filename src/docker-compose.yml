@@ -2,14 +2,14 @@ version: '2'
 
 services:
   gameloanmanagerweb:
-    image: miguelpatreze/gameloanmanagerweb:1.0.3
+    image: miguelpatreze/gameloanmanagerweb
     ports:
       - 4200:80
     depends_on:
       - identityserver
       - gameloanmanagerapi
   gameloanmanagerapi:
-    image: miguelpatreze/gameloanmanagerapi:1.0.1
+    image: miguelpatreze/gameloanmanagerapi
     ports:
       - 83:80
     environment:
@@ -19,7 +19,7 @@ services:
       - mongo
       - identityserver
   identityserver:
-    image: miguelpatreze/identityserver:1.0.1
+    image: miguelpatreze/identityserver
     ports:
       - 82:80
     environment:

@@ -10,6 +10,7 @@ export class FriendModalService {
 
     open(data: any) {
         return this.matDialog.open(FriendModalComponent, {
+            disableClose: true,
             width: 'auto',
             data: data,
             id: 'friendModal'

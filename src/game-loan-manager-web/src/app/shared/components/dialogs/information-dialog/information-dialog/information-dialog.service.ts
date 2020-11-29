@@ -11,6 +11,7 @@ export class InformationDialogService {
 
     open(data: any) {
         return this.matDialog.open(InformationDialogComponent, {
+            disableClose: true,
             width: 'auto',
             data: data,
             id: 'informationDialog'

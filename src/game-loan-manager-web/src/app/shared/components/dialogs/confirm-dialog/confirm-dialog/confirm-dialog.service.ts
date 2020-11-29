@@ -11,6 +11,7 @@ export class ConfirmDialogService {
 
   open(data: any) {
     const dialogRef = this.matDialog.open(ConfirmDialogComponent, {
+      disableClose: true,
       width: 'auto',
       data: data,
       id: 'confirmDialog'

@@ -10,6 +10,7 @@ export class GameModalService {
 
     open(data: any) {
         return this.matDialog.open(GameModalComponent, {
+            disableClose: true,
             width: 'auto',
             data: data,
             id: 'gameModal'
