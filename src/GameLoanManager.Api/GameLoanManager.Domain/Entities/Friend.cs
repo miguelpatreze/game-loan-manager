@@ -5,11 +5,20 @@ namespace GameLoanManager.Domain.Entities
     public class Friend : EntityBase
     {
         public Friend(string name, string cellPhoneNumber)
+            : base()
         {
             Name = name;
             NormalizedName = name?.ToLowerInvariant();
             CellPhoneNumber = cellPhoneNumber;
         }
+        public Friend(string id, string name, string cellPhoneNumber)
+            : base(id)
+        {
+            Name = name;
+            NormalizedName = name?.ToLowerInvariant();
+            CellPhoneNumber = cellPhoneNumber;
+        }
+
         private string _name;
         public string Name
         {

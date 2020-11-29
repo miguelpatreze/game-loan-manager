@@ -3,7 +3,7 @@ using FluentValidation.AspNetCore;
 using GameLoanManager.Api.Settings;
 using GameLoanManager.Api.Swagger;
 using GameLoanManager.CrossCutting.Notification;
-using GameLoanManager.Domain.Commands.Friends.CreateFriendCommand;
+using GameLoanManager.Domain.Commands.Friends.CreateFriend;
 using GameLoanManager.MongoDB;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

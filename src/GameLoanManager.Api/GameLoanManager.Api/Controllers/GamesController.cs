@@ -1,8 +1,8 @@
 ﻿using GameLoanManager.Api.Responses;
 using GameLoanManager.CrossCutting.Notification;
-using GameLoanManager.Domain.Commands.Games.CreateGameCommand;
-using GameLoanManager.Domain.Commands.Games.DeleteGameCommand;
-using GameLoanManager.Domain.Commands.Games.PatchGameCommand;
+using GameLoanManager.Domain.Commands.Games.CreateGame;
+using GameLoanManager.Domain.Commands.Games.DeleteGame;
+using GameLoanManager.Domain.Commands.Games.PatchGame;
 using GameLoanManager.Domain.Queries.Games.GetGameById;
 using GameLoanManager.Domain.Queries.Games.GetGames;
 using MediatR;

@@ -1,8 +1,8 @@
 ﻿using GameLoanManager.Api.Responses;
 using GameLoanManager.CrossCutting.Notification;
-using GameLoanManager.Domain.Commands.Friends.CreateFriendCommand;
-using GameLoanManager.Domain.Commands.Friends.DeleteFriendCommand;
-using GameLoanManager.Domain.Commands.Friends.PatchFriendCommand;
+using GameLoanManager.Domain.Commands.Friends.CreateFriend;
+using GameLoanManager.Domain.Commands.Friends.DeleteFriend;
+using GameLoanManager.Domain.Commands.Friends.PatchFriend;
 using GameLoanManager.Domain.Queries.Friends.GetFriendById;
 using GameLoanManager.Domain.Queries.Friends.GetFriends;
 using MediatR;

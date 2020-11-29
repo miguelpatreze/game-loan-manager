@@ -1,4 +1,4 @@
-﻿using GameLoanManager.Domain.Commands.Games.PatchGameCommand;
+﻿using GameLoanManager.Domain.Commands.Games.PatchGame;
 using MongoDB.Bson;
 using Swashbuckle.AspNetCore.Filters;
 

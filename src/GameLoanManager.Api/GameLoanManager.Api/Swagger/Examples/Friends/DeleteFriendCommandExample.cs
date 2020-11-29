@@ -1,4 +1,4 @@
-﻿using GameLoanManager.Domain.Commands.Friends.DeleteFriendCommand;
+﻿using GameLoanManager.Domain.Commands.Friends.DeleteFriend;
 using MongoDB.Bson;
 using Swashbuckle.AspNetCore.Filters;
 

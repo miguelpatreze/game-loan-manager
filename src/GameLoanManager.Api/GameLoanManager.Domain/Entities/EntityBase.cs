@@ -10,6 +10,11 @@ namespace GameLoanManager.Domain.Entities
             Enabled = true;
             CreatedAt = DateTime.Now;
             CreatedAt = DateTime.Now;
+
+        }
+        public EntityBase(string id) : this()
+        {
+            Id = id;
         }
 
         [BsonId]

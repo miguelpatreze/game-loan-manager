@@ -5,10 +5,18 @@ namespace GameLoanManager.Domain.Entities
     public class Game : EntityBase
     {
         public Game(string name)
+            : base()
         {
             Name = name;
             NormalizedName = name?.ToLowerInvariant();
         }
+        public Game(string id, string name)
+            : base(id)
+        {
+            Name = name;
+            NormalizedName = name?.ToLowerInvariant();
+        }
+
         private string _name;
         public string Name
         {

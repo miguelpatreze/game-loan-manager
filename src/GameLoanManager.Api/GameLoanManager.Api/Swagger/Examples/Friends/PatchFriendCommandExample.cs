@@ -1,4 +1,4 @@
-﻿using GameLoanManager.Domain.Commands.Friends.PatchFriendCommand;
+﻿using GameLoanManager.Domain.Commands.Friends.PatchFriend;
 using MongoDB.Bson;
 using Swashbuckle.AspNetCore.Filters;
 

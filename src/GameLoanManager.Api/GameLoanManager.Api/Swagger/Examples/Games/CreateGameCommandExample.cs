@@ -1,4 +1,4 @@
-﻿using GameLoanManager.Domain.Commands.Games.CreateGameCommand;
+﻿using GameLoanManager.Domain.Commands.Games.CreateGame;
 using Swashbuckle.AspNetCore.Filters;
 
 namespace GameLoanManager.Api.Swagger.Examples.Games

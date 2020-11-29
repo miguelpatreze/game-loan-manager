@@ -1,5 +1,4 @@
-﻿using GameLoanManager.Domain.Commands.Friends;
-using GameLoanManager.Domain.Commands.Friends.CreateFriendCommand;
+﻿using GameLoanManager.Domain.Commands.Friends.CreateFriend;
 using Swashbuckle.AspNetCore.Filters;
 
 namespace GameLoanManager.Api.Swagger.Examples.Friends

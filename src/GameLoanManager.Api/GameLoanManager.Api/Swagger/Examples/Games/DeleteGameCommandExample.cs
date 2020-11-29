@@ -1,4 +1,4 @@
-﻿using GameLoanManager.Domain.Commands.Games.DeleteGameCommand;
+﻿using GameLoanManager.Domain.Commands.Games.DeleteGame;
 using MongoDB.Bson;
 using Swashbuckle.AspNetCore.Filters;
 
