@@ -15,12 +15,12 @@ namespace GameLoanManager.Domain.Queries.Friends.GetFriends
     public class GetFriendsQueryHandler : IRequestHandler<GetFriendsQuery, IEnumerable<GetFriendsResponse>>
     {
         private readonly IMapper _mapper;
-        private readonly IBaseRepository<Friend> _repository;
+        private readonly IFriendRepository _repository;
         private readonly INotificationContext _notificationContext;
         private readonly ILogger<GetFriendsQueryHandler> _logger;
 
         public GetFriendsQueryHandler(IMapper mapper,
-            IBaseRepository<Friend> repository,
+            IFriendRepository repository,
             INotificationContext notificationContext,
             ILogger<GetFriendsQueryHandler> logger)
         {

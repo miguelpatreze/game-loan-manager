@@ -13,12 +13,12 @@ namespace GameLoanManager.Domain.Queries.Friends.GetFriendById
     public class GetFriendByIdQueryHandler : IRequestHandler<GetFriendByIdQuery, GetFriendByIdResponse>
     {
         private readonly IMapper _mapper;
-        private readonly IBaseRepository<Friend> _repository;
+        private readonly IFriendRepository _repository;
         private readonly INotificationContext _notificationContext;
         private readonly ILogger<GetFriendByIdQueryHandler> _logger;
 
         public GetFriendByIdQueryHandler(IMapper mapper,
-            IBaseRepository<Friend> repository,
+            IFriendRepository repository,
             INotificationContext notificationContext,
             ILogger<GetFriendByIdQueryHandler> logger)
         {

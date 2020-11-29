@@ -28,13 +28,13 @@ namespace GameLoanManager.Domain.Test.Tests.Commands.DeleteFriend
 
         public DeleteFriendCommandHandler GetHandler(
             IMapper mapper = null,
-            IBaseRepository<Friend> repository = null,
+            IFriendRepository repository = null,
             INotificationContext notificationContext = null,
             ILogger<DeleteFriendCommandHandler> logger = null
         )
         {
             mapper ??= AutoMapperMock.GetDefaultInstance();
-            repository ??= Substitute.For<IBaseRepository<Friend>>();
+            repository ??= Substitute.For<IFriendRepository>();
             logger ??= Substitute.For<ILogger<DeleteFriendCommandHandler>>();
             notificationContext ??= Substitute.For<INotificationContext>();
 

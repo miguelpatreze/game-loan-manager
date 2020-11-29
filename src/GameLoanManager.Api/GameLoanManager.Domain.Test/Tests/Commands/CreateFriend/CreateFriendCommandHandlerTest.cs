@@ -17,12 +17,12 @@ namespace GameLoanManager.Domain.Test.Tests.Commands.CreateFriend
 
         public CreateFriendCommandHandler GetHandler(
             IMapper mapper = null,
-            IBaseRepository<Friend> repository = null,
+            IFriendRepository repository = null,
             ILogger<CreateFriendCommandHandler> logger = null
         )
         {
             mapper ??= AutoMapperMock.GetDefaultInstance();
-            repository ??= Substitute.For<IBaseRepository<Friend>>();
+            repository ??= Substitute.For<IFriendRepository>();
             logger ??= Substitute.For<ILogger<CreateFriendCommandHandler>>();
 
             return new CreateFriendCommandHandler(
@@ -34,7 +34,7 @@ namespace GameLoanManager.Domain.Test.Tests.Commands.CreateFriend
         [Fact(DisplayName = "Should Be Success When Call Method Handle")]
         public async Task ShouldBeSuccessWhenCallMethodHandle()
         {
-            var repository = Substitute.For<IBaseRepository<Friend>>();
+            var repository = Substitute.For<IFriendRepository>();
             var command = CreateFriendCommandMock.GetDefaultValidInstance();
             var handler = GetHandler(repository: repository);
 

@@ -13,12 +13,12 @@ namespace GameLoanManager.Domain.Commands.Friends.DeleteFriend
         IRequestHandler<DeleteFriendCommand>
     {
         private readonly IMapper _mapper;
-        private readonly IBaseRepository<Friend> _repository;
+        private readonly IFriendRepository _repository;
         private readonly ILogger<DeleteFriendCommandHandler> _logger;
         private readonly INotificationContext _notificationContext;
 
         public DeleteFriendCommandHandler(IMapper mapper,
-            IBaseRepository<Friend> repository,
+            IFriendRepository repository,
             ILogger<DeleteFriendCommandHandler> logger,
             INotificationContext notificationContext)
         {

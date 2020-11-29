@@ -13,12 +13,12 @@ namespace GameLoanManager.Domain.Commands.Friends.PatchFriend
         IRequestHandler<PatchFriendCommand>
     {
         private readonly IMapper _mapper;
-        private readonly IBaseRepository<Friend> _repository;
+        private readonly IFriendRepository _repository;
         private readonly ILogger<PatchFriendCommandHandler> _logger;
         private readonly INotificationContext _notificationContext;
 
         public PatchFriendCommandHandler(IMapper mapper,
-            IBaseRepository<Friend> repository,
+            IFriendRepository repository,
             ILogger<PatchFriendCommandHandler> logger,
             INotificationContext notificationContext)
         {

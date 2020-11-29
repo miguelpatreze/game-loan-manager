@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GameLoanManager.Domain.ValueObjects;
+using System;
+using System.Collections.Generic;
 
 namespace GameLoanManager.Domain.Entities
 {
@@ -10,6 +12,7 @@ namespace GameLoanManager.Domain.Entities
             Name = name;
             NormalizedName = name?.ToLowerInvariant();
             CellPhoneNumber = cellPhoneNumber;
+            LoanedGames = new List<LoanedGame>();
         }
         public Friend(string id, string name, string cellPhoneNumber)
             : base(id)
@@ -17,6 +20,7 @@ namespace GameLoanManager.Domain.Entities
             Name = name;
             NormalizedName = name?.ToLowerInvariant();
             CellPhoneNumber = cellPhoneNumber;
+            LoanedGames = new List<LoanedGame>();
         }
 
         private string _name;
@@ -33,9 +37,16 @@ namespace GameLoanManager.Domain.Entities
         }
         public string NormalizedName { get; private set; }
         public string CellPhoneNumber { get; private set; }
-
+        public IList<LoanedGame> LoanedGames { get; private set; }
 
         public void SetName(string name) => Name = name;
         public void SetCellPhoneNumber(string cellPhoneNumber) => CellPhoneNumber = cellPhoneNumber;
+        public void LoanGame(string gameId, string gameName, DateTime loanedAt)
+        {
+            if (LoanedGames is null)
+                LoanedGames = new List<LoanedGame>();
+
+            LoanedGames.Add(new LoanedGame(gameId, gameName, loanedAt));
+        }
     }
 }

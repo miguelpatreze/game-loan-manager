@@ -12,11 +12,11 @@ namespace GameLoanManager.Domain.Commands.Friends.CreateFriend
         IRequestHandler<CreateFriendCommand, string>
     {
         private readonly IMapper _mapper;
-        private readonly IBaseRepository<Friend> _repository;
+        private readonly IFriendRepository _repository;
         private readonly ILogger<CreateFriendCommandHandler> _logger;
 
         public CreateFriendCommandHandler(IMapper mapper,
-            IBaseRepository<Friend> repository,
+            IFriendRepository repository,
             ILogger<CreateFriendCommandHandler> logger)
         {
             _mapper = mapper;
