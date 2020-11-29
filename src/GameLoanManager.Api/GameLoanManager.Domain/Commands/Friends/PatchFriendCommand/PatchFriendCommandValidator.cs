@@ -11,8 +11,8 @@ namespace GameLoanManager.Domain.Commands.Friends.PatchFriendCommand
                 .WithMessage("Obrigatório informar o Id do Amigo a ser alterado.");
 
             RuleFor(friend => friend.CellPhoneNumber)
-                .MaximumLength(11)
-                .WithMessage("O Número do Celular não pode exceder 11 caracteres.")
+                .Length(11)
+                .WithMessage("O Número do Celular deve conter exatamente 11 caracteres.")
                 .When(friend => !string.IsNullOrWhiteSpace(friend.CellPhoneNumber));
         }
 

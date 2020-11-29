@@ -15,13 +15,17 @@ import { FriendModalComponent } from './components/friend/modal/friend-modal.com
 import { ConfirmDialogComponent } from './shared/components/dialogs/confirm-dialog/confirm-dialog/confirm-dialog.component';
 import { InformationDialogComponent } from './shared/components/dialogs/information-dialog/information-dialog/information-dialog.component';
 import { HttpErrorInterceptor } from './interceptors/http-error-interceptor';
+import { GameComponent } from './components/game/game.component';
+import { GameModalComponent } from './components/game/modal/game-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FriendComponent,
+    GameComponent,
     FriendModalComponent,
+    GameModalComponent,
     ConfirmDialogComponent,
     InformationDialogComponent
   ],
@@ -53,6 +57,7 @@ import { HttpErrorInterceptor } from './interceptors/http-error-interceptor';
   bootstrap: [AppComponent],
   entryComponents: [
     FriendModalComponent,
+    GameModalComponent,
     ConfirmDialogComponent,
     InformationDialogComponent
   ]

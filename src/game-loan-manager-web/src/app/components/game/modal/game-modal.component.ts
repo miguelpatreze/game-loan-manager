@@ -10,11 +10,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
-  selector: 'friend-modal',
-  templateUrl: './friend-modal.component.html',
+  selector: 'game-modal',
+  templateUrl: './game-modal.component.html',
   styleUrls: [],
 })
-export class FriendModalComponent implements OnInit {
+export class GameModalComponent implements OnInit {
   @Output() saveClick = new EventEmitter();
   @Output() cancelClick = new EventEmitter();
 
@@ -22,7 +22,7 @@ export class FriendModalComponent implements OnInit {
 
   constructor(
     private matDialog: MatDialog,
-    public dialogRef: MatDialogRef<FriendModalComponent>,
+    public dialogRef: MatDialogRef<GameModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder
   ) { }
@@ -31,18 +31,16 @@ export class FriendModalComponent implements OnInit {
     if (!this.form) {
       this.form = this.formBuilder.group({
         'id': [null],
-        'name': [null, Validators.required],
-        'cellPhoneNumber': [null, Validators.required]
+        'name': [null, Validators.required]
       });
     }
   }
 
-  buildForm(friend) {
-    if (friend) {
+  buildForm(game) {
+    if (game) {
       this.form = this.formBuilder.group({
-        'id': [friend.id],
-        'name': [friend.name, Validators.required],
-        'cellPhoneNumber': [friend.cellPhoneNumber, Validators.required]
+        'id': [game.id],
+        'name': [game.name, Validators.required]
       });
     }
   }
