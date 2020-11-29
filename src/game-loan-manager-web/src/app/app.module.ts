@@ -6,7 +6,7 @@ import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 import { HttpJwtInterceptor } from './interceptors/http-jwt-interceptor';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatPaginatorModule, MatSortModule, MatTableModule, MatToolbarModule } from '@angular/material';
+import { MatButtonModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatPaginatorIntl, MatPaginatorModule, MatSortModule, MatTableModule, MatToolbarModule, MatTooltipModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FriendComponent } from './components/friend/friend.component';
@@ -17,7 +17,10 @@ import { InformationDialogComponent } from './shared/components/dialogs/informat
 import { HttpErrorInterceptor } from './interceptors/http-error-interceptor';
 import { GameComponent } from './components/game/game.component';
 import { GameModalComponent } from './components/game/modal/game-modal.component';
+import { IConfig, NgxMaskModule } from 'ngx-mask';
+import { getBrPaginatorIntl } from './shared/components/paginator/br-paginator.intl';
 
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +33,7 @@ import { GameModalComponent } from './components/game/modal/game-modal.component
     InformationDialogComponent
   ],
   imports: [
+    NgxMaskModule.forRoot(options),
     ReactiveFormsModule,
     MatTableModule,
     MatFormFieldModule,
@@ -46,12 +50,14 @@ import { GameModalComponent } from './components/game/modal/game-modal.component
     MatMenuModule,
     MatIconModule,
     BrowserAnimationsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTooltipModule
   ],
   providers: [
     { provide: OAuthStorage, useValue: localStorage },
     { provide: HTTP_INTERCEPTORS, useClass: HttpJwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
+    { provide: MatPaginatorIntl, useValue: getBrPaginatorIntl() }
 
   ],
   bootstrap: [AppComponent],

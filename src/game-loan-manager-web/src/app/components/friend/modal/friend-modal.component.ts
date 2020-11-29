@@ -31,7 +31,7 @@ export class FriendModalComponent implements OnInit {
     if (!this.form) {
       this.form = this.formBuilder.group({
         'id': [null],
-        'name': [null, Validators.required],
+        'name': [null, [Validators.required, Validators.maxLength(100)]],
         'cellPhoneNumber': [null, Validators.required]
       });
     }
