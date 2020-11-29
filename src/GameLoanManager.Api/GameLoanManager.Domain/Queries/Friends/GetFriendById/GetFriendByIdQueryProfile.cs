@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using GameLoanManager.Domain.Entities;
 using GameLoanManager.Domain.Queries.Friends.GetFriendById.Responses;
+using GameLoanManager.Domain.ValueObjects;
 
 namespace GameLoanManager.Domain.Queries.Friends.GetFriendById
 {
@@ -9,6 +10,7 @@ namespace GameLoanManager.Domain.Queries.Friends.GetFriendById
         public GetFriendByIdQueryProfile()
         {
             CreateMap<Friend, GetFriendByIdResponse>();
+            CreateMap<LoanedGame, GetFriendByIdLoanedGamesResponse>();
         }
     }
 }

@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { FriendService } from 'src/app/services/friend-service';
+import { GameService } from 'src/app/services/game-service';
 import { ConfirmDialogService } from 'src/app/shared/components/dialogs/confirm-dialog/confirm-dialog/confirm-dialog.service';
 import { InformationDialogService } from 'src/app/shared/components/dialogs/information-dialog/information-dialog/information-dialog.service';
 import { FriendModalService } from './modal/friend-modal.service';
@@ -23,8 +24,9 @@ export class FriendComponent implements AfterViewInit {
     private _friendService: FriendService,
     private _friendModalService: FriendModalService,
     private _confirmDialogService: ConfirmDialogService,
-    private _informationDialogService: InformationDialogService) {
-
+    private _informationDialogService: InformationDialogService,
+    private _gameService: GameService
+  ) {
     this._get();
   }
 
@@ -32,6 +34,7 @@ export class FriendComponent implements AfterViewInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
+
   addFriend() {
     this._openModal("Adicionar Amigo");
   }
@@ -90,8 +93,7 @@ export class FriendComponent implements AfterViewInit {
     this._friendService.post(form).subscribe(res => {
       if (res) {
         this._informationDialogService.open({ message: "Amigo cadastrado com sucesso." });
-        this._friendModalService.close();
-        this._get();
+        this._closeModal();
       }
     });
   }
@@ -100,8 +102,7 @@ export class FriendComponent implements AfterViewInit {
     this._friendService.patch(form).subscribe(res => {
       if (res) {
         this._informationDialogService.open({ message: "Amigo alterado com sucesso." });
-        this._friendModalService.close();
-        this._get();
+        this._closeModal();
       }
     });
   }
@@ -112,8 +113,21 @@ export class FriendComponent implements AfterViewInit {
       this.save(data);
     });
 
+    modalRef.componentInstance.returnGameEventClick.subscribe((gameId: any) => {
+      this._gameService.postDevolution({ gameId: gameId }).subscribe(res => {
+        if (res) {
+          this._informationDialogService.open({ message: "Jogo recebido com sucesso." });
+          this._closeModal();
+        }
+      });
+    });
+
     if (friend)
       modalRef.componentInstance.buildForm(friend);
+  }
 
+  private _closeModal() {
+    this._friendModalService.close();
+    this._get();
   }
 }

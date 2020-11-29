@@ -7,5 +7,6 @@ namespace GameLoanManager.Domain.Contracts
     public interface IFriendRepository: IBaseRepository<Friend>
     {
         Task UpdateOneRemoveLoanedGameAsync(string gameId, CancellationToken cancellationToken);
+        Task<Friend> GetByGameIdAsync(string gameId, CancellationToken cancellationToken);
     }
 }

@@ -13,26 +13,29 @@ namespace GameLoanManager.Domain.Queries.Games.GetGameById
     public class GetGameByIdQueryHandler : IRequestHandler<GetGameByIdQuery, GetGameByIdResponse>
     {
         private readonly IMapper _mapper;
-        private readonly IBaseRepository<Game> _repository;
+        private readonly IBaseRepository<Game> _gameRepository;
+        private readonly IFriendRepository _friendRepository;
         private readonly INotificationContext _notificationContext;
         private readonly ILogger<GetGameByIdQueryHandler> _logger;
 
         public GetGameByIdQueryHandler(IMapper mapper,
             IBaseRepository<Game> repository,
             INotificationContext notificationContext,
-            ILogger<GetGameByIdQueryHandler> logger)
+            ILogger<GetGameByIdQueryHandler> logger,
+            IFriendRepository friendRepository)
         {
             _mapper = mapper;
-            _repository = repository;
+            _gameRepository = repository;
             _notificationContext = notificationContext;
             _logger = logger;
+            _friendRepository = friendRepository;
         }
 
         public async Task<GetGameByIdResponse> Handle(GetGameByIdQuery request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("GetGameByIdQueryHandler was called");
 
-            var game = await _repository.GetByIdAsync(request.Id, cancellationToken);
+            var game = await _gameRepository.GetByIdAsync(request.Id, cancellationToken);
 
             if (game == null)
             {
@@ -40,9 +43,17 @@ namespace GameLoanManager.Domain.Queries.Games.GetGameById
                 return default;
             }
 
+            var response = _mapper.Map<GetGameByIdResponse>(game);
+
+            if (game.Loaned)
+            {
+                var friend = await _friendRepository.GetByGameIdAsync(game.Id, cancellationToken);
+                response.LoanedTo = friend?.Name;
+            }
+
             _logger.LogInformation("GetGameByIdQueryHandler end of execution");
 
-            return _mapper.Map<GetGameByIdResponse>(game);
+            return response;
         }
     }
 }

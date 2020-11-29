@@ -7,7 +7,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MatTableDataSource, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'friend-modal',
@@ -16,9 +16,12 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 })
 export class FriendModalComponent implements OnInit {
   @Output() saveClick = new EventEmitter();
+  @Output() returnGameEventClick = new EventEmitter();
   @Output() cancelClick = new EventEmitter();
 
   form: FormGroup;
+  displayedColumns: string[] = ['name', 'loanedAt', 'actions'];
+  dataSourceLoanedGames: MatTableDataSource<any> = new MatTableDataSource();
 
   constructor(
     private matDialog: MatDialog,
@@ -44,6 +47,7 @@ export class FriendModalComponent implements OnInit {
         'name': [friend.name, Validators.required],
         'cellPhoneNumber': [friend.cellPhoneNumber, Validators.required]
       });
+      this.dataSourceLoanedGames.data = friend.loanedGames;
     }
   }
 
@@ -59,5 +63,7 @@ export class FriendModalComponent implements OnInit {
     this.cancelClick.emit();
     this.close();
   }
-
+  onReturnGameClick(gameId){
+    this.returnGameEventClick.emit(gameId);
+  }
 }

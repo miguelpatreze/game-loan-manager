@@ -20,5 +20,11 @@ namespace GameLoanManager.MongoDB.Repositories
 
             await _collection.UpdateOneAsync(filter, update, null, cancellationToken);
         }
+        public async Task<Friend> GetByGameIdAsync(string gameId, CancellationToken cancellationToken)
+        {
+            var filter = Builders<Friend>.Filter.ElemMatch(x => x.LoanedGames, loanedGame => loanedGame.GameId == gameId);
+
+            return await _collection.Find(filter).FirstOrDefaultAsync(cancellationToken);
+        }
     }
 }

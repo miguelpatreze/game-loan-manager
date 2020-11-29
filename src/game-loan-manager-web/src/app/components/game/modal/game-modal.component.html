@@ -7,6 +7,14 @@
         <input matInput name="name" formControlName="name" maxlength="50" required>
       </mat-form-field>
     </p>
+    <div *ngIf="loanedTo != undefined">
+      <p>
+        <mat-label><strong>Emprestado Para:</strong></mat-label>
+      </p>
+      <p>
+        <mat-label>{{loanedTo}}</mat-label>
+      </p>
+    </div>
   </form>
 </div>
 <div mat-dialog-actions>

@@ -41,7 +41,7 @@ namespace GameLoanManager.Domain.Commands.Games.ReturnGame
             if (game == null)
             {
                 _notificationContext.AddNotification("Jogo não encontrado", $"O jogo com o id:{request.GameId} não foi encontrado.");
-                await Unit.Task;
+                return await Unit.Task;
             }
 
             game.ReturnGame();

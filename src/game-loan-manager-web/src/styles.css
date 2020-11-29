@@ -18,3 +18,19 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mat-tooltip {
   font-size: 14px !important;
 }
+
+.table-container {
+  position: relative;
+  max-height: 400px;
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+}
+
+   
+.mat-column-created {
+  max-width: 124px;
+}
+

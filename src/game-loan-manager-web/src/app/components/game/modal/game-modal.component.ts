@@ -19,6 +19,7 @@ export class GameModalComponent implements OnInit {
   @Output() cancelClick = new EventEmitter();
 
   form: FormGroup;
+  loanedTo: string;
 
   constructor(
     private matDialog: MatDialog,
@@ -42,6 +43,7 @@ export class GameModalComponent implements OnInit {
         'id': [game.id],
         'name': [game.name, Validators.required]
       });
+      this.loanedTo = game.loanedTo;
     }
   }
 

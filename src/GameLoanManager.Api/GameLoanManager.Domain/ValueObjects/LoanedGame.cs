@@ -5,15 +5,15 @@ namespace GameLoanManager.Domain.ValueObjects
 {
     public class LoanedGame
     {
-        public LoanedGame(string gameId, string gameName, DateTime loanedAt)
+        public LoanedGame(string id, string name, DateTime loanedAt)
         {
-            GameId = gameId;
-            GameName = gameName;
+            GameId = id;
+            Name = name;
             LoanedAt = loanedAt;
         }
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string GameId { get; set; }
-        public string GameName { get; private set; }
+        public string Name { get; private set; }
         public DateTime LoanedAt { get; private set; }
     }
 }

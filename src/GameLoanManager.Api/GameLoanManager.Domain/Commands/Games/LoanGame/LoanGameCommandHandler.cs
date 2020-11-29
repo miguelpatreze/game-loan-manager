@@ -44,7 +44,7 @@ namespace GameLoanManager.Domain.Commands.Games.LoanGame
             if (game == null)
             {
                 _notificationContext.AddNotification("Jogo não encontrado", $"O jogo com o id:{request.GameId} não foi encontrado.");
-                await Unit.Task;
+                return await Unit.Task;
             }
 
             var friend = await _friendRepository.GetByIdAsync(request.FriendId);
@@ -52,7 +52,7 @@ namespace GameLoanManager.Domain.Commands.Games.LoanGame
             if (friend == null)
             {
                 _notificationContext.AddNotification("Amigo não encontrado", $"O amigo com o id:{request.FriendId} não foi encontrado.");
-                await Unit.Task;
+                return await Unit.Task;
             }
 
             game.LoanGame();

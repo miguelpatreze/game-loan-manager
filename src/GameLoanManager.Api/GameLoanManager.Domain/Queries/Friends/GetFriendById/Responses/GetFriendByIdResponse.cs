@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace GameLoanManager.Domain.Queries.Friends.GetFriendById.Responses
 {
@@ -8,5 +9,6 @@ namespace GameLoanManager.Domain.Queries.Friends.GetFriendById.Responses
         public string Name { get; set; }
         public string CellPhoneNumber { get; set; }
         public DateTime CreatedAt { get; set; }
+        public IList<GetFriendByIdLoanedGamesResponse> LoanedGames { get; set; }
     }
 }
