@@ -38,7 +38,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                         return throwError("validation error");
                     }
                     
-                    return throwError("validation error");
+                    return throwError("an error has ocurred");
 
                 })
             )
