@@ -42,6 +42,8 @@ namespace GameLoanManager.Domain.Commands.Friends.DeleteFriendCommand
 
             await _repository.DeleteOneAsync(friend, cancellationToken);
 
+            _logger.LogInformation("DeleteFriendCommandHandler end of execution");
+            
             return await Unit.Task;
         }
     }

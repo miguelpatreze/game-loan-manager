@@ -8,7 +8,7 @@ namespace GameLoanManager.Api.Swagger.Examples.Friends
     {
         public DeleteFriendCommand GetExamples()
         {
-            return new DeleteFriendCommand(new ObjectId().ToString());
+            return new DeleteFriendCommand(ObjectId.GenerateNewId().ToString());
         }
     }
 }

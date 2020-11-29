@@ -4,6 +4,7 @@ using GameLoanManager.Domain.Contracts;
 using GameLoanManager.Domain.Entities;
 using GameLoanManager.Domain.Queries.Friends.GetFriends.Responses;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -16,19 +17,24 @@ namespace GameLoanManager.Domain.Queries.Friends.GetFriends
         private readonly IMapper _mapper;
         private readonly IBaseRepository<Friend> _repository;
         private readonly INotificationContext _notificationContext;
+        private readonly ILogger<GetFriendsQueryHandler> _logger;
 
         public GetFriendsQueryHandler(IMapper mapper,
             IBaseRepository<Friend> repository,
-            INotificationContext notificationContext)
+            INotificationContext notificationContext,
+            ILogger<GetFriendsQueryHandler> logger)
         {
             _mapper = mapper;
             _repository = repository;
             _notificationContext = notificationContext;
+            _logger = logger;
         }
 
 
         public async Task<IEnumerable<GetFriendsResponse>> Handle(GetFriendsQuery request, CancellationToken cancellationToken)
         {
+            _logger.LogInformation("GetFriendsQueryHandler was called");
+
             var friends = await _repository.FindAsync(cancellationToken);
 
             if (!friends.Any())
@@ -36,6 +42,8 @@ namespace GameLoanManager.Domain.Queries.Friends.GetFriends
                 _notificationContext.AddNotification("Nenhum Amigo Encontrado", "Não existe nenhum amigo no Banco de Dados :(");
                 return default;
             }
+
+            _logger.LogInformation("GetFriendsQueryHandler end of execution");
 
             return _mapper.Map<IEnumerable<GetFriendsResponse>>(friends);
         }

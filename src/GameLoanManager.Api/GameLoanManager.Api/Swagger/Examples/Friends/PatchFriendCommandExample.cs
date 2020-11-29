@@ -8,7 +8,7 @@ namespace GameLoanManager.Api.Swagger.Examples.Friends
     {
         public PatchFriendCommand GetExamples()
         {
-            return new PatchFriendCommand(new ObjectId().ToString(), "Miguel Padoze", "(16) 98765-4321");
+            return new PatchFriendCommand(ObjectId.GenerateNewId().ToString(), "Miguel Padoze", "(16) 98765-4321");
         }
     }
 }

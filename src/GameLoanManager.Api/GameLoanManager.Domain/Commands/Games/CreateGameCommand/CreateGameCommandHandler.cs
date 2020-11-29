@@ -34,6 +34,8 @@ namespace GameLoanManager.Domain.Commands.Games.CreateGameCommand
 
             await _repository.InsertOneAsync(game, cancellationToken);
 
+            _logger.LogInformation("CreateGameCommandHandler end of execution");
+            
             return game.Id;
         }
     }

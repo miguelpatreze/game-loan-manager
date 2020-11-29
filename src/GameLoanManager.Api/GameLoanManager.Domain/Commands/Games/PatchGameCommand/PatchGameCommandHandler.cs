@@ -30,7 +30,7 @@ namespace GameLoanManager.Domain.Commands.Games.PatchGameCommand
 
         public async Task<Unit> Handle(PatchGameCommand request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"CreateGameCommandHandler was called Request.Name: {request.Name}");
+            _logger.LogInformation($"PatchGameCommandHandler was called Request.Id: {request.Id}");
 
             var game = await _repository.GetByIdAsync(request.Id);
 
@@ -46,6 +46,8 @@ namespace GameLoanManager.Domain.Commands.Games.PatchGameCommand
                 game.SetName(request.Name);
 
             await _repository.ReplaceOneAsync(game, cancellationToken);
+
+            _logger.LogInformation("PatchGameCommandHandler end of execution");
 
             return await Unit.Task;
         }

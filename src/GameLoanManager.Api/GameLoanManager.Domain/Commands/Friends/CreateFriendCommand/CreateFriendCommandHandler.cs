@@ -34,6 +34,8 @@ namespace GameLoanManager.Domain.Commands.Friends.CreateFriendCommand
 
             await _repository.InsertOneAsync(friend, cancellationToken);
 
+            _logger.LogInformation("CreateFriendCommandHandler end of execution.");
+            
             return friend.Id;
         }
     }

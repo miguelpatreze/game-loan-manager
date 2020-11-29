@@ -30,7 +30,7 @@ namespace GameLoanManager.Domain.Commands.Friends.PatchFriendCommand
 
         public async Task<Unit> Handle(PatchFriendCommand request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"CreateFriendCommandHandler was called Request.Name: {request.Name}");
+            _logger.LogInformation($"PatchFriendCommandHandler was called Request.Id: {request.Id}");
 
             var friend = await _repository.GetByIdAsync(request.Id);
 
@@ -50,6 +50,8 @@ namespace GameLoanManager.Domain.Commands.Friends.PatchFriendCommand
 
             await _repository.ReplaceOneAsync(friend, cancellationToken);
 
+            _logger.LogInformation("PatchFriendCommandHandler end of execution");
+            
             return await Unit.Task;
         }
 

@@ -42,6 +42,8 @@ namespace GameLoanManager.Domain.Commands.Games.DeleteGameCommand
 
             await _repository.DeleteOneAsync(game, cancellationToken);
 
+            _logger.LogInformation("DeleteGameCommandHandler end of execution");
+           
             return await Unit.Task;
         }
     }
