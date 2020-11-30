@@ -12,6 +12,7 @@ A Game Loan Manager - .Net Core + Angular + IdentityServer
 To run the project, you can use the docker-compose file inside src folder
 
 1 - cd src
+
 2 - docker-compose up -d
 
 Then, the frontend will be running on http://localhost:4200
