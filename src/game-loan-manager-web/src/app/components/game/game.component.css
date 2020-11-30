@@ -1,0 +1,19 @@
+  .table-container {
+    position: relative;
+    max-height: 400px;
+    overflow: auto;
+  }
+  
+  table {
+    width: 100%;
+  }
+  
+     
+  .mat-column-created {
+    max-width: 124px;
+  }
+
+  button {
+    margin: 16px 8px;
+  }
+  

@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content>
+  <form class="form" [formGroup]="form">
+    <p>
+      <mat-form-field>
+        <mat-label>Nome</mat-label>
+        <input matInput name="name" formControlName="name" maxlength="50" required>
+      </mat-form-field>
+    </p>
+    <div *ngIf="loanedTo != undefined">
+      <p>
+        <mat-label><strong>Emprestado Para:</strong></mat-label>
+      </p>
+      <p>
+        <mat-label>{{loanedTo}}</mat-label>
+      </p>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="onSaveClick()" type="submit" color="primary"
+    [disabled]="!form.valid || form.pristine">Salvar</button>
+  <button mat-raised-button (click)="onCancelClick()" color="danger">Cancelar</button>
+</div>

@@ -1,0 +1,36 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.spacer {
+    flex: 1;
+  }
+
+.container {
+  position: relative;
+  min-height: 200px;
+  margin-right: auto;
+  margin-left: auto;
+  width:70%;
+}
+
+.mat-tooltip {
+  font-size: 14px !important;
+}
+
+.table-container {
+  position: relative;
+  max-height: 400px;
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+}
+
+   
+.mat-column-created {
+  max-width: 124px;
+}
+

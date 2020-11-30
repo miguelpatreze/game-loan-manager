@@ -1,0 +1,35 @@
+version: '2'
+
+services:
+  gameloanmanagerweb:
+    image: miguelpatreze/gameloanmanagerweb
+    ports:
+      - 4200:80
+    depends_on:
+      - identityserver
+      - gameloanmanagerapi
+  gameloanmanagerapi:
+    image: miguelpatreze/gameloanmanagerapi
+    ports:
+      - 83:80
+    environment:
+      MongoSettings__ConnectionString: mongodb://mongo:27017
+      IdentityServerSettings__Url: http://identityserver
+    depends_on:
+      - mongo
+      - identityserver
+  identityserver:
+    image: miguelpatreze/identityserver
+    ports:
+      - 82:80
+    environment:
+      MongoSettings__ConnectionString: mongodb://mongo:27017
+      RedisSettings__ConnectionString: redis
+      Issuer_Uri: http://localhost:82
+    depends_on:
+      - mongo
+      - redis
+  mongo:
+    image: mongo
+  redis:
+    image: redis
