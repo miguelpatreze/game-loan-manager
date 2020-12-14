@@ -6,7 +6,7 @@ services:
     ports:
       - 4200:80
     depends_on:
-      - identityserver
+      - gameloanmanageridentity
       - gameloanmanagerapi
   gameloanmanagerapi:
     image: miguelpatreze/gameloanmanagerapi
@@ -14,12 +14,12 @@ services:
       - 83:80
     environment:
       MongoSettings__ConnectionString: mongodb://mongo:27017
-      IdentityServerSettings__Url: http://identityserver
+      IdentityServerSettings__Url: http://gameloanmanageridentity
     depends_on:
       - mongo
-      - identityserver
-  identityserver:
-    image: miguelpatreze/identityserver:3.0.6
+      - gameloanmanageridentity
+  gameloanmanageridentity:
+    image: miguelpatreze/gameloanmanageridentity
     ports:
       - 82:80
     environment:
