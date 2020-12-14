@@ -1,4 +1,4 @@
-using System;
+using IdentityServer4.Models;
 
 namespace IdentityServer.MVC.Models
 {
@@ -7,5 +7,6 @@ namespace IdentityServer.MVC.Models
         public string RequestId { get; set; }
 
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+        public ErrorMessage Error { get; set; }
     }
 }

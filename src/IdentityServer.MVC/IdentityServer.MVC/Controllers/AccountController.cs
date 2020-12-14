@@ -2,7 +2,6 @@
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
 namespace IdentityServer.MVC.Controllers
@@ -66,7 +65,7 @@ namespace IdentityServer.MVC.Controllers
 
             var logoutRequest = await _interaction.GetLogoutContextAsync(logoutId);
 
-            if (string.IsNullOrWhiteSpace(logoutRequest?.PostLogoutRedirectUri) == true )
+            if (string.IsNullOrWhiteSpace(logoutRequest?.PostLogoutRedirectUri) == true)
                 return NotFound();
 
             if (HttpContext.User?.Identity?.IsAuthenticated == true)

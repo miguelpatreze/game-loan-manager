@@ -6,7 +6,7 @@ services:
     ports:
       - 4200:80
     depends_on:
-      - identityserver
+      - gameloanmanageridentity
       - gameloanmanagerapi
   gameloanmanagerapi:
     image: miguelpatreze/gameloanmanagerapi
@@ -14,22 +14,27 @@ services:
       - 83:80
     environment:
       MongoSettings__ConnectionString: mongodb://mongo:27017
-      IdentityServerSettings__Url: http://identityserver
+      IdentityServerSettings__Url: http://gameloanmanageridentity
     depends_on:
       - mongo
-      - identityserver
-  identityserver:
-    image: miguelpatreze/identityserver
+      - gameloanmanageridentity
+  gameloanmanageridentity:
+    image: miguelpatreze/gameloanmanageridentity
     ports:
       - 82:80
     environment:
-      MongoSettings__ConnectionString: mongodb://mongo:27017
+      SqlServerSettings__ConnectionString: Server=sqlserver;Database=IdentityServer;User ID=sa;Password=Password123;
       RedisSettings__ConnectionString: redis
       Issuer_Uri: http://localhost:82
     depends_on:
-      - mongo
+      - sqlserver
       - redis
   mongo:
     image: mongo
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    environment: 
+      ACCEPT_EULA: Y
+      SA_PASSWORD: Password123
   redis:
     image: redis

@@ -1,8 +1,7 @@
 ﻿namespace IdentityServer.MVC.Settings
 {
-    public class MongoSettings
+    public class SqlServerSettings
     {
-        public string Database { get; set; }
         public string ConnectionString { get; set; }
     }
 }

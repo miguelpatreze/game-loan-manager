@@ -1,5 +1,4 @@
 using IdentityServer.MVC.Data;
-using IdentityServer.MVC.Data.Stores;
 using IdentityServer.MVC.Models;
 using IdentityServer.MVC.Settings;
 using Microsoft.AspNetCore.Builder;
@@ -7,12 +6,14 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MongoDB.Bson;
-using MongoDB.Driver;
+using Serilog;
 using StackExchange.Redis;
+using System;
+using System.Reflection;
 
 namespace IdentityServer.MVC
 {
@@ -30,6 +31,23 @@ namespace IdentityServer.MVC
         {
             services.AddControllersWithViews();
 
+            var sqlServerSettings = Configuration.GetSection(nameof(SqlServerSettings)).Get<SqlServerSettings>();
+            
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(sqlServerSettings.ConnectionString,
+                sqlServerOptionsAction: sqlOptions =>
+                {
+                    sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
+                    sqlOptions.EnableRetryOnFailure(maxRetryCount: 30, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
+                }
+                ));
+
+            Log.Logger = new LoggerConfiguration()
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .MinimumLevel.Information()
+                .CreateLogger();
+
             var redisCacheSettings = Configuration.GetSection(nameof(RedisSettings)).Get<RedisSettings>();
 
             services.AddDataProtection(opts =>
@@ -38,11 +56,7 @@ namespace IdentityServer.MVC
             })
             .PersistKeysToStackExchangeRedis(ConnectionMultiplexer.Connect(redisCacheSettings.ConnectionString), "DataProtection-Keys");
 
-            var mongoSettings = Configuration.GetSection(nameof(MongoSettings)).Get<MongoSettings>();
-            services.AddSingleton(mongoSettings);
-            services.AddSingleton<IMongoClient>(new MongoClient(mongoSettings.ConnectionString));
-
-            services.AddIdentity<ApplicationUser, IdentityRole<ObjectId>>(
+            services.AddIdentity<ApplicationUser, IdentityRole>(
                     options =>
                     {
                         options.Password.RequireLowercase = false;
@@ -54,12 +68,8 @@ namespace IdentityServer.MVC
                         options.Password.RequiredUniqueChars = 0;
                         options.User.RequireUniqueEmail = false;
                     })
-                .AddUserStore<UserStore>()
-                .AddRoleStore<RoleStore>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-
-            services.AddSingleton<IUserStore<ApplicationUser>, UserStore>();
-            services.AddSingleton<IRoleStore<IdentityRole<ObjectId>>, RoleStore>();
 
             services.AddIdentityServer(opt =>
             {
@@ -67,26 +77,40 @@ namespace IdentityServer.MVC
                 opt.UserInteraction.LoginUrl = "/Account/Login";
                 opt.UserInteraction.LogoutUrl = "/Account/Logout";
             })
-                .AddAspNetIdentity<ApplicationUser>()
-                .AddInMemoryApiResources(Config.ApiResources)
-                .AddInMemoryApiScopes(Config.ApiScopes)
-                .AddInMemoryClients(Config.Clients)
-                .AddInMemoryIdentityResources(Config.IdentityResources)
-                .AddInMemoryPersistedGrants()
-                .AddDeveloperSigningCredential();
-
-            SeedData.EnsureSeedData(services);
+            .AddConfigurationStore(options =>
+            {
+                options.ConfigureDbContext = b => b.UseSqlServer(sqlServerSettings.ConnectionString,
+                sqlServerOptionsAction: sqlOptions =>
+                {
+                    sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
+                    sqlOptions.EnableRetryOnFailure(maxRetryCount: 30, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
+                });
+            })
+            .AddOperationalStore(options =>
+            {
+                options.ConfigureDbContext = b => b.UseSqlServer(sqlServerSettings.ConnectionString,
+                sqlServerOptionsAction: sqlOptions =>
+                {
+                    sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
+                    sqlOptions.EnableRetryOnFailure(maxRetryCount: 30, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
+                });
+            })
+            .AddAspNetIdentity<ApplicationUser>()
+            .AddDeveloperSigningCredential();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.InitializeDatabase();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
             else
             {
+                app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
@@ -106,5 +130,6 @@ namespace IdentityServer.MVC
                     pattern: "{controller=Account}/{action=login}");
             });
         }
+
     }
 }

@@ -1,49 +1,99 @@
 ﻿using IdentityServer.MVC.Models;
+using IdentityServer4.EntityFramework.DbContexts;
+using IdentityServer4.EntityFramework.Mappers;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Threading.Tasks;
+using Serilog;
+using System.Linq;
 
 namespace IdentityServer.MVC.Data
 {
-    public class SeedData
+    public static class SeedData
     {
-        public static async Task EnsureSeedData(IServiceCollection services)
+        public static IApplicationBuilder InitializeDatabase(this IApplicationBuilder app)
         {
             try
             {
-                var userMgr = services.BuildServiceProvider().GetRequiredService<UserManager<ApplicationUser>>();
-                var adminUser = await userMgr.FindByNameAsync("miguelpatreze");
-                
-                if (adminUser == null)
+
+                using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
                 {
-                    adminUser = new ApplicationUser
+                    serviceScope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
+                    var context = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
+                    context.Database.Migrate();
+
+                    if (!context.Clients.Any())
                     {
-                        UserName = "miguelpatreze",
-                        Email = "patreze_2@hotmail.com",
-                        EmailConfirmed = true
-                    };
-                    await userMgr.CreateAsync(adminUser, "123456");
-                    await userMgr.AddToRoleAsync(adminUser, "Admin");
+                        foreach (var client in Config.Clients)
+                        {
+                            context.Clients.Add(client.ToEntity());
+                        }
+                        context.SaveChanges();
+                    }
+
+                    if (!context.IdentityResources.Any())
+                    {
+                        foreach (var resource in Config.IdentityResources)
+                        {
+                            context.IdentityResources.Add(resource.ToEntity());
+                        }
+                        context.SaveChanges();
+                    }
+
+                    if (!context.ApiScopes.Any())
+                    {
+                        foreach (var resource in Config.ApiScopes)
+                        {
+                            context.ApiScopes.Add(resource.ToEntity());
+                        }
+                        context.SaveChanges();
+                    }
+
+                    var contextUsers = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
+                    contextUsers.Database.Migrate();
+
+                    var userMgr = serviceScope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+                    var roleMgr = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+                    var adminRole = roleMgr.FindByNameAsync("ADMIN").Result;
+                    if (adminRole is null)
+                        roleMgr.CreateAsync(new IdentityRole { Name = "ADMIN" }).Wait();
+
+                    var adminUser = userMgr.FindByNameAsync("miguelpatreze").Result;
+                    if (adminUser is null)
+                    {
+                        adminUser = new ApplicationUser
+                        {
+                            UserName = "miguelpatreze",
+                            Email = "patreze_2@hotmail.com",
+                            EmailConfirmed = true
+                        };
+                        userMgr.CreateAsync(adminUser, "123456").Wait();
+                        userMgr.AddToRoleAsync(adminUser, "Admin").Wait();
+                    }
+
+                    var regularUser = userMgr.FindByNameAsync("miguelpadoze").Result;
+                    if (regularUser is null)
+                    {
+                        regularUser = new ApplicationUser
+                        {
+                            UserName = "miguelpadoze",
+                            Email = "padoze_2@hotmail.com",
+                            EmailConfirmed = true
+                        };
+                        userMgr.CreateAsync(regularUser, "123456").Wait();
+                    }
                 }
 
-                var regularUser = await userMgr.FindByNameAsync("miguelpadoze");
-           
-                if (regularUser == null)
-                {
-                    regularUser = new ApplicationUser
-                    {
-                        UserName = "miguelpadoze",
-                        Email = "padoze_2@hotmail.com",
-                        EmailConfirmed = true
-                    };
-                    await userMgr.CreateAsync(regularUser, "123456");
-                }
+                return app;
             }
-            catch (Exception)
+            catch (System.Exception ex)
             {
-                //Log.Error("Error by trying to add default user");
+                Log.Error(ex, "Ocorreu um erro ao inserir os dados inicias do banco de dados.");
+                throw ex;
             }
+
         }
     }
 }
